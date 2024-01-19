@@ -1,0 +1,40 @@
+{
+    "camera": {
+        "upVector": [
+            0.0,
+            1.0,
+            0.0
+        ],
+        "position": [
+            50.0,
+            75.0,
+            50.0
+        ],
+        "orientation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "distance": 0.5,
+        "height": 0.0,
+        "offsetTarget": 0.1
+    },
+    "window": {
+        "name": "test scene",
+        "height": 720,
+        "width": 1080,
+        "fovy": 0.6,
+        "zNear": 0.1,
+        "zFar": 100.0
+    },
+    "defaultPaths": {
+        "pathAudio": "assets/audios/",
+        "pathModels": "assets/models/",
+        "pathScripts": "assets/scripts/",
+        "pathShaders": "assets/shaders/",
+        "pathTextures": "assets/textures/",
+        "pathScenes": "assets/scenes/",
+        "pathDebugSquare": "debug/square.obj",
+        "pathDebugSphere": "debug/sphere.obj"
+    }
+}

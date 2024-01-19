@@ -1,0 +1,32 @@
+[
+    {
+        "camera": {
+            "upVector": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "position": [
+                50.0,
+                75.0,
+                50.0
+            ],
+            "orientation": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "distance": 0.5,
+            "height": 0.0,
+            "offsetTarget": 0.10000000149011612
+        },
+        "gridBroadphase": {
+            "lengthPerBox": [
+                4.0,
+                4.0,
+                4.0
+            ]
+        }
+    }
+]
