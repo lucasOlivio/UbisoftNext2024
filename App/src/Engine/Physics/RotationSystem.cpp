@@ -29,22 +29,34 @@ namespace MyEngine
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
             RotationComponent* pRotation = pScene->Get<RotationComponent>(entityId);
 
+
+            // Clip acceleration to max
+            int clockwiseAcceleration = Math::Sign<float>(pRotation->acceleration);
+            float currentAcceleration = clockwiseAcceleration * pRotation->acceleration;
+            if (currentAcceleration > pRotation->maxAcceleration)
+            {
+                pRotation->acceleration = pRotation->maxAcceleration * clockwiseAcceleration;
+            }
+
             float newVelocity = pRotation->velocity + (pRotation->acceleration * deltaTime);
             float dragForce = newVelocity * -(pRotation->drag * deltaTime);
             pRotation->velocity = newVelocity + dragForce;
 
-            float absVelocity = Math::Sign<float>(pRotation->velocity) * pRotation->velocity;
-            if (absVelocity > pRotation->maxSpeed)
+            // Clip velocity between min and max
+            int clockwiseVelocity = Math::Sign<float>(pRotation->velocity);
+            float currentVelocity = clockwiseVelocity * pRotation->velocity;
+            if (currentVelocity > pRotation->maxSpeed)
             {
-                pRotation->velocity = pRotation->maxSpeed;
+                pRotation->velocity = pRotation->maxSpeed * clockwiseVelocity;
             }
-            else if (absVelocity <= minSpeed)
+            else if (currentVelocity <= minSpeed)
             {
                 pRotation->velocity = 0.0f;
             }
 
             pTransform->angle = pTransform->angle + (pRotation->velocity * deltaTime);
 
+            // Clip angle between 0 degrees and 360 degrees
             if (pTransform->angle > fullCircle)
             {
                 pTransform->angle = 0.0f;

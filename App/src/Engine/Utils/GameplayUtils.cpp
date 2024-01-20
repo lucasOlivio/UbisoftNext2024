@@ -30,7 +30,7 @@ namespace MyEngine
 		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(zombieId);
 		pMovement->acceleration = Vec2(0.0f, 0.0f);
 		pMovement->velocity = FORWARD_VECTOR * speed;
-		pMovement->maxSpeed = speed;
+		pMovement->maxSpeed = speed + 1; // To avoid movement system to keep reseting velocity
 
 		FollowTargetComponent* pFollowTarget = pScene->AddComponent<FollowTargetComponent>(zombieId);
 		pFollowTarget->entityToFollow = GetPlayerId(pScene);

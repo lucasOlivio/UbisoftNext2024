@@ -26,10 +26,18 @@ namespace MyEngine
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
             MovementComponent* pMovement = pScene->Get<MovementComponent>(entityId);
 
+            // Clip acceleration to max
+            float currentAcceleration = pMovement->acceleration.Length();
+            if (currentAcceleration > pMovement->maxAcceleration)
+            {
+                pMovement->acceleration = pMovement->acceleration.Normalize() * pMovement->maxAcceleration;
+            }
+
             Vec2 newVelocity = pMovement->velocity + (pMovement->acceleration * deltaTime);
             Vec2 dragForce = newVelocity * -(pMovement->drag * deltaTime);
             pMovement->velocity = newVelocity + dragForce;
-            
+
+            // Clip velocity between min and max
             float currentSpeed = pMovement->velocity.Length();
             if (currentSpeed > pMovement->maxSpeed)
             {
