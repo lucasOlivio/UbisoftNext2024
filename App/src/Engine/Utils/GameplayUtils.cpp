@@ -3,6 +3,7 @@
 #include "GameplayUtils.h"
 
 #include "Engine/ECS/Components.h"
+#include "Engine/ECS/SceneView.hpp"
 
 #include "Engine/Utils/GraphicsUtils.h"
 
@@ -28,9 +29,19 @@ namespace MyEngine
 
 		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(zombieId);
 		pMovement->acceleration = Vec2(0.0f, 0.0f);
-		pMovement->velocity = Vec2(0.0f, 0.0f);
+		pMovement->velocity = FORWARD_VECTOR * speed;
 		pMovement->maxSpeed = speed;
+
+		FollowTargetComponent* pFollowTarget = pScene->AddComponent<FollowTargetComponent>(zombieId);
+		pFollowTarget->entityToFollow = GetPlayerId(pScene);
 
         return zombieId;
     }
+
+	Entity GameplayUtils::GetPlayerId(Scene* pScene)
+	{
+		SceneView<PlayerComponent>::Iterator it = SceneView<PlayerComponent>(*pScene).begin();
+
+		return *it;
+	}
 }

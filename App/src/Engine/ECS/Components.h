@@ -64,4 +64,9 @@ namespace MyEngine
 		float fireRate;
 		float lastFire;
 	};
+
+	struct FollowTargetComponent
+	{
+		Entity entityToFollow;
+	};
 }

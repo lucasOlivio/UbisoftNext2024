@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------
 #include "Engine/Core/Engine.h"
 #include "Engine/Core/ConsoleSystem.h"
+#include "Engine/Core/FrameSystem.h"
 
 #include "Engine/ECS/Components.h"
 
@@ -17,6 +18,7 @@
 
 #include "Engine/Gameplay/PlayerControllerSystem.h"
 #include "Engine/Gameplay/ZombieSpawnSystem.h"
+#include "Engine/Gameplay/FollowTargetSystem.h"
 
 #include "Engine/Utils/Random.h"
 
@@ -75,19 +77,34 @@ void Init()
 	pRigidBody->radius = 25.0f;
 
 	// Create systems
-	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
+
+	// Graphics systems
 	RenderSystem* pRenderSystem = new RenderSystem();
-	MovementSystem* pMovementSystem = new MovementSystem();
-	RotationSystem* pRotationSystem = new RotationSystem();
-	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
-	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
 
 	gEngine->AddSystem(pRenderSystem, pScene);
+	
+	// Physics systems
+	MovementSystem* pMovementSystem = new MovementSystem();
+	RotationSystem* pRotationSystem = new RotationSystem();
+
 	gEngine->AddSystem(pMovementSystem, pScene);
 	gEngine->AddSystem(pRotationSystem, pScene);
+
+	// Gameplay systems
+	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
+	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
+	FollowTargetSystem* pFollowTargetSystem = new FollowTargetSystem();
+
 	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pZombieSpawnSystem, pScene);
+	gEngine->AddSystem(pFollowTargetSystem, pScene);
+
+	// Core systems
+	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
+	FrameSystem* pFrameSystem = new FrameSystem();
+
 	gEngine->AddSystem(pConsoleSystem, pScene);
+	gEngine->AddSystem(pFrameSystem, pScene);
 
 	// Initialize systems
 	gEngine->Init();

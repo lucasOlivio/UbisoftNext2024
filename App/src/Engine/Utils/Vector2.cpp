@@ -98,4 +98,13 @@ namespace MyEngine
 			return Vec2();
 		}
 	}
+
+	float Vec2::Angle(const Vec2& other) const
+	{
+		float dot = this->Dot(other);
+		float cross = this->Cross(other);
+		float angle = atan2(cross, dot);
+
+		return angle;
+	}
 }

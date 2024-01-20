@@ -11,5 +11,7 @@ namespace MyEngine
 	{
 	public:
 		static Entity CreateZombie(Scene* pScene, Vec2 position, float speed);
+
+		static Entity GetPlayerId(Scene* pScene);
 	};
 }

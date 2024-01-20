@@ -38,6 +38,8 @@ namespace MyEngine
 
         Vec2 Normalize() const;
 
+        float Angle(const Vec2& other) const;
+
         float x, y;
     };
 }

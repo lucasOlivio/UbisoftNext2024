@@ -7,11 +7,11 @@
 namespace MyEngine
 {
 	// Behavior of the zombies (they basically just follow the player)
-	class ZombieBrainSystem : public iSystem
+	class FollowTargetSystem : public iSystem
 	{
 	public:
-		ZombieBrainSystem() = default;
-		virtual ~ZombieBrainSystem() { };
+		FollowTargetSystem() = default;
+		virtual ~FollowTargetSystem() { };
 
 		virtual void Init();
 

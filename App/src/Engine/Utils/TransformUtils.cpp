@@ -12,6 +12,6 @@ namespace MyEngine
         float forwardX = std::cos(angle);
         float forwardY = std::sin(angle);
 
-        return Vec2(forwardX, forwardY);
+        return Vec2(forwardX, forwardY).Normalize();
     }
 }
