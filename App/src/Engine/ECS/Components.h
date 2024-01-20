@@ -34,6 +34,8 @@ namespace MyEngine
 		float acceleration;
 
 		float drag;
+
+		float maxSpeed;
 	};
 
 	struct SpriteComponent

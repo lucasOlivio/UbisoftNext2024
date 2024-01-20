@@ -6,6 +6,8 @@
 #include "Engine/ECS/Components.h"
 #include "Engine/ECS/SingletonComponents/CoreLocator.h"
 
+#include "Engine/Utils/Math.h"
+
 namespace MyEngine
 {
     void RotationSystem::Init()
@@ -18,6 +20,8 @@ namespace MyEngine
 
     void RotationSystem::Update(Scene* pScene, float deltaTime)
     {
+        float minSpeed = 0.02f;
+        float fullCircle = Math::DegreesToRadians(360.0f);
         deltaTime = deltaTime/ 1000.0f;
         // Update velocity and position
         for (Entity entityId : SceneView<TransformComponent, RotationComponent>(*pScene))
@@ -25,18 +29,29 @@ namespace MyEngine
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
             RotationComponent* pRotation = pScene->Get<RotationComponent>(entityId);
 
-            pRotation->velocity = pRotation->velocity + (pRotation->acceleration * deltaTime);
-            pRotation->velocity = pRotation->velocity * -(pRotation->drag * deltaTime);
+            float newVelocity = pRotation->velocity + (pRotation->acceleration * deltaTime);
+            float dragForce = newVelocity * -(pRotation->drag * deltaTime);
+            pRotation->velocity = newVelocity + dragForce;
+
+            float absVelocity = Math::Sign<float>(pRotation->velocity) * pRotation->velocity;
+            if (absVelocity > pRotation->maxSpeed)
+            {
+                pRotation->velocity = pRotation->maxSpeed;
+            }
+            else if (absVelocity <= minSpeed)
+            {
+                pRotation->velocity = 0.0f;
+            }
 
             pTransform->angle = pTransform->angle + (pRotation->velocity * deltaTime);
 
-            if (pTransform->angle > 359.9f)
+            if (pTransform->angle > fullCircle)
             {
                 pTransform->angle = 0.0f;
             }
             else if (pTransform->angle < 0.0f)
             {
-                pTransform->angle = 359.0f;
+                pTransform->angle = fullCircle - 0.01f;
             }
         }
     }

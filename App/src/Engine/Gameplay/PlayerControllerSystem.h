@@ -30,6 +30,8 @@ namespace MyEngine
 		void m_Accelerate(TransformComponent* pTransform, MovementComponent* pMovement, int direction);
 
 		// direction: 1 left, -1 right
-		void m_Rotate(RotationComponent* pRotation, MovementComponent* pMovement, int direction);
+		void m_Rotate(TransformComponent* pTransform, RotationComponent* pRotation, MovementComponent* pMovement, int direction);
+
+		void m_ClipPlayerToWindow(TransformComponent* pTransform, RigidBodyComponent* pRigidBody);
 	};
 }

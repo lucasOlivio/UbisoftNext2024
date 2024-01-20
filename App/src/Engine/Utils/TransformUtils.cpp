@@ -8,11 +8,9 @@ namespace MyEngine
 {
     Vec2 TransformUtils::GetForwardVector(float angle)
     {
-        float angleRadians = angle * PI / 180.0f;
-
         // Calculate the forward vector based on the angle
-        float forwardX = std::cos(angleRadians);
-        float forwardY = std::sin(angleRadians);
+        float forwardX = std::cos(angle);
+        float forwardY = std::sin(angle);
 
         return Vec2(forwardX, forwardY);
     }

@@ -9,6 +9,9 @@
 #include "Engine/Core/Constants.h"
 #include "Engine/Core/Types.h"
 #include "Engine/ECS/Base.h"
+#include "Engine/Utils/Log.h"
+
+#include <AppSettings.h>
 
 #include <vector>
 #include <string>

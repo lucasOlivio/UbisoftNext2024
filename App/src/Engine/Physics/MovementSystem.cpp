@@ -18,6 +18,7 @@ namespace MyEngine
 
     void MovementSystem::Update(Scene* pScene, float deltaTime)
     {
+        float minSpeed = 1.0f;
         deltaTime = deltaTime/ 1000.0f;
         // Update velocity and position
         for (Entity entityId : SceneView<TransformComponent, MovementComponent>(*pScene))
@@ -34,7 +35,7 @@ namespace MyEngine
             {
                 pMovement->velocity = pMovement->velocity.Normalize() * pMovement->maxSpeed;
             }
-            else if (currentSpeed <= 5.0f)
+            else if (currentSpeed <= minSpeed)
             {
                 pMovement->velocity = Vec2(0.0f, 0.0f);
             }

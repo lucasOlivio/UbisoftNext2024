@@ -6,6 +6,7 @@
 #include <app.h>
 //------------------------------------------------------------------------
 #include "Engine/Core/Engine.h"
+#include "Engine/Core/ConsoleSystem.h"
 
 #include "Engine/ECS/Components.h"
 
@@ -35,7 +36,7 @@ void Init()
 	// Background
 	Entity entityIdbackground = pScene->CreateEntity();
 	TransformComponent* pTransformBackground = pScene->AddComponent<TransformComponent>(entityIdbackground);
-	pTransformBackground->position = Vec2(512, 394);
+	pTransformBackground->position = Vec2(512, 385);
 	pTransformBackground->angle = 0;
 	pTransformBackground->scale = 1;
 
@@ -49,7 +50,7 @@ void Init()
 	Entity entityId = pScene->CreateEntity();
 	TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(entityId);
 	pTransform->position = Vec2(512, 394);
-	pTransform->angle = 10;
+	pTransform->angle = 0.0f;
 	pTransform->scale = 1;
 
 	SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(entityId);
@@ -67,6 +68,10 @@ void Init()
 	pMovement->velocity = Vec2(0.0f, 0.0f);
 
 	PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(entityId);
+
+	RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(entityId);
+	pRigidBody->bodyType = eBody::DYNAMIC;
+	pRigidBody->radius = 25.0f;
 
 	// Zombie
 	Entity entityId2 = pScene->CreateEntity();
@@ -90,11 +95,13 @@ void Init()
 	MovementSystem* pMovementSystem = new MovementSystem();
 	RotationSystem* pRotationSystem = new RotationSystem();
 	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
+	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
 
 	gEngine->AddSystem(pRenderSystem, pScene);
 	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pMovementSystem, pScene);
 	gEngine->AddSystem(pRotationSystem, pScene);
+	gEngine->AddSystem(pConsoleSystem, pScene);
 
 	// Initialize systems
 	gEngine->Init();

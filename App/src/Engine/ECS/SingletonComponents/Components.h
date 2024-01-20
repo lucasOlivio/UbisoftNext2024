@@ -10,6 +10,7 @@
 #include "Engine/Utils/Vector2.h"
 
 #include <map>
+#include <queue>
 
 namespace MyEngine
 {
@@ -18,6 +19,16 @@ namespace MyEngine
 		int frameCount;
 		float fpsTimer;
 		float fps;
+	};
+
+	struct ConsoleComponent
+	{
+		struct Line
+		{
+			float color[3];
+			std::string txt;
+		};
+		std::queue<Line> lines;
 	};
 
 	struct GridBroadphaseComponent
