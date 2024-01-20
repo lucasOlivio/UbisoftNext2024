@@ -16,7 +16,7 @@ const float PLAYER_FIRERATE = 1.0f; // Shots per second
 
 const float PLAYER_ACCELERATION = 3000.0f;
 const float PLAYER_DRAG = 15.0f;
-const float PLAYER_MAX_SPEED = 5000.0f;
+const float PLAYER_MAX_SPEED = 100000.0f;
 
 const float PLAYER_ROTATION_ACCELERATION = 30.0f;
 const float PLAYER_MAX_ROTATION_SPEED = 50.0f;

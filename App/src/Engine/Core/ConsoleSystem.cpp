@@ -24,14 +24,14 @@ namespace MyEngine
 
     void ConsoleSystem::Render(Scene* pScene)
     {
-        const float LINE_SPACING = 20.0f;
+        const float LINE_SPACING = 30.0f;
         ConsoleComponent* pConsole = CoreLocator::GetConsole();
 
         std::queue< ConsoleComponent::Line> lines = pConsole->lines;
 
         // Iterate through the console lines and print each line
         float x = 10.0f;
-        float y = 20.0f;
+        float y = 80.0f;
         while (!lines.empty())
         {
             ConsoleComponent::Line line = lines.front();

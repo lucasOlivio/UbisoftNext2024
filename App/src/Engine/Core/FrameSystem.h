@@ -1,16 +1,15 @@
 #pragma once
 
 #include "Engine/Core/iSystem.h"
-#include "Engine/ECS/Components.h"
 
 namespace MyEngine
 {
-	// Takes care of managing the sprites and rendering them
-	class RenderSystem : public iSystem
+	// Keeps track of all related to frame number, fps etc
+	class FrameSystem : public iSystem
 	{
 	public:
-		RenderSystem() = default;
-		virtual ~RenderSystem() { };
+		FrameSystem() = default;
+		virtual ~FrameSystem() { };
 
 		virtual void Init();
 

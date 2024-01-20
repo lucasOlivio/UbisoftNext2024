@@ -14,6 +14,8 @@
 
 namespace MyEngine
 {
+	// Core global components
+	// -------------------------
 	struct FrameCounterComponent
 	{
 		int frameCount;
@@ -31,6 +33,8 @@ namespace MyEngine
 		std::queue<Line> lines;
 	};
 
+	// Physics global components
+	// -------------------------
 	struct GridBroadphaseComponent
 	{
 		// Mapping of AABBs to their indices in the grid
@@ -54,5 +58,19 @@ namespace MyEngine
 	{
 		std::vector<sCollisionData> collisions[FRAME_RATE];
 		size_t currSize;
+	};
+
+	// Gameplay global components
+	// -------------------------
+	struct ZombieSpawnComponent
+	{
+		float spawnRate;
+		float lastSpawn;
+		
+		int totalZombies;
+		int maxZombies;
+
+		float spawnDistance; // Radius from window center
+		float initialZombieSpeed;
 	};
 }

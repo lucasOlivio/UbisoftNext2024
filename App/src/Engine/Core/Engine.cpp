@@ -7,6 +7,7 @@
 
 #include "Engine/ECS/SingletonComponents/CoreLocator.h"
 #include "Engine/ECS/SingletonComponents/PhysicsLocator.h"
+#include "Engine/ECS/SingletonComponents/GameplayLocator.h"
 
 namespace MyEngine
 {
@@ -85,6 +86,7 @@ namespace MyEngine
         // Delete singleton components
         CoreLocator::Clear();
         PhysicsLocator::Clear();
+        GameplayLocator::Clear();
 
         // Delete event bus
         delete m_pEventBusCollision;

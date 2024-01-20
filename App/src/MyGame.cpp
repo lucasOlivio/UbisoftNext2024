@@ -16,6 +16,7 @@
 #include "Engine/Physics/RotationSystem.h"
 
 #include "Engine/Gameplay/PlayerControllerSystem.h"
+#include "Engine/Gameplay/ZombieSpawnSystem.h"
 
 #include "Engine/Utils/Random.h"
 
@@ -73,34 +74,19 @@ void Init()
 	pRigidBody->bodyType = eBody::DYNAMIC;
 	pRigidBody->radius = 25.0f;
 
-	// Zombie
-	Entity entityId2 = pScene->CreateEntity();
-	TransformComponent* pTransform2 = pScene->AddComponent<TransformComponent>(entityId2);
-	pTransform2->position = Vec2(10.0f, 10.0f);
-	pTransform2->angle = 0;
-	pTransform2->scale = 1;
-
-	SpriteComponent* pSprite2 = pScene->AddComponent<SpriteComponent>(entityId2);
-	pSprite2->name = DEFAULT_SPRITE_PATH + "zombie.png";
-	pSprite2->cols = 1;
-	pSprite2->rows = 1;
-	pSprite2->speed = 1.0f;
-
-	MovementComponent* pMovement2 = pScene->AddComponent<MovementComponent>(entityId2);
-	pMovement2->acceleration = Vec2(0.0f, 0.0f);
-	pMovement2->velocity = Vec2(0.0f, 0.0f);
-
 	// Create systems
+	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
 	RenderSystem* pRenderSystem = new RenderSystem();
 	MovementSystem* pMovementSystem = new MovementSystem();
 	RotationSystem* pRotationSystem = new RotationSystem();
 	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
-	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
+	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
 
 	gEngine->AddSystem(pRenderSystem, pScene);
-	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pMovementSystem, pScene);
 	gEngine->AddSystem(pRotationSystem, pScene);
+	gEngine->AddSystem(pPlayerControllerSystem, pScene);
+	gEngine->AddSystem(pZombieSpawnSystem, pScene);
 	gEngine->AddSystem(pConsoleSystem, pScene);
 
 	// Initialize systems

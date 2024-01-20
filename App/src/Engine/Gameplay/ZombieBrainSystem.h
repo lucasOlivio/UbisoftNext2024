@@ -1,16 +1,17 @@
 #pragma once
 
 #include "Engine/Core/iSystem.h"
+
 #include "Engine/ECS/Components.h"
 
 namespace MyEngine
 {
-	// Takes care of managing the sprites and rendering them
-	class RenderSystem : public iSystem
+	// Behavior of the zombies (they basically just follow the player)
+	class ZombieBrainSystem : public iSystem
 	{
 	public:
-		RenderSystem() = default;
-		virtual ~RenderSystem() { };
+		ZombieBrainSystem() = default;
+		virtual ~ZombieBrainSystem() { };
 
 		virtual void Init();
 
