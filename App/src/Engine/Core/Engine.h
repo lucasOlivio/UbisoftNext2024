@@ -5,7 +5,6 @@
 #include "Engine/ECS/Scene.h"
 
 #include "Engine/Events/CollisionEvent.h"
-#include "Engine/Events/StateChangeEvent.h"
 #include "Engine/Events/iEventBus.h"
 
 namespace MyEngine
@@ -46,7 +45,5 @@ namespace MyEngine
 
 		// Events
 		iEventBus<eCollisionEvents, CollisionEnterEvent>* m_pEventBusCollision;
-		iEventBus<eStateChangeEvents, StoppedStateEvent>* m_pEventBusStoppedState;
-		iEventBus<eStateChangeEvents, RunningStateEvent>* m_pEventBusRunningState;
 	};
 }

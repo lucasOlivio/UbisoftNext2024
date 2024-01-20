@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Engine/Core/Constants.h"
-#include "Engine/Core/StateProperties.h"
 
 #include "Engine/ECS/Base.h"
 
@@ -14,23 +13,11 @@
 
 namespace MyEngine
 {
-	// Singleton components
-	struct CameraComponent
-	{
-		Vec2 position;
-	};
-
 	struct FrameCounterComponent
 	{
 		int frameCount;
 		float fpsTimer;
 		float fps;
-	};
-
-	struct StateComponent
-	{
-		eStates prevState; // Only state system should modify this
-		eStates currState; // Any system can modify this to stop/run simulation
 	};
 
 	struct GridBroadphaseComponent

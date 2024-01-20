@@ -24,12 +24,6 @@ namespace MyEngine
 
 	void RegisterCollisionSystem::Update(Scene* pScene, float deltaTime)
 	{
-		StateComponent* pState = CoreLocator::GetState();
-		if (pState->currState == eStates::SIMULATION_STOPPED)
-		{
-			return;
-		}
-
 		FrameCollisionComponent* pFrameColl = PhysicsLocator::GetFrameCollision();
 		FrameCounterComponent* pFrames = CoreLocator::GetFrameCounter();
 

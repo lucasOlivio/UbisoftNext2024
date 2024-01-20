@@ -23,12 +23,6 @@ namespace MyEngine
 
     void CollisionSystem::Update(Scene* pScene, float deltaTime)
     {
-        StateComponent* pState = CoreLocator::GetState();
-        if (pState->currState == eStates::SIMULATION_STOPPED)
-        {
-            return;
-        }
-
         NarrowPhaseTestsComponent* pTests = PhysicsLocator::GetNarrowPhaseTests();
 
         // The first layer is the grouping of objects to test

@@ -11,11 +11,6 @@ class CSimpleSprite;
 
 namespace MyEngine
 {
-	struct TagComponent
-	{
-		std::string name;
-	};
-
 	struct TransformComponent
 	{
 		Vec2 position;
@@ -27,12 +22,18 @@ namespace MyEngine
 	{
 		Vec2 velocity;
 		Vec2 acceleration;
+
+		float drag;
+
+		float maxSpeed;
 	};
 
 	struct RotationComponent
 	{
 		float velocity;
 		float acceleration;
+
+		float drag;
 	};
 
 	struct SpriteComponent
@@ -51,5 +52,14 @@ namespace MyEngine
 		eBody bodyType;
 
 		float radius;
+	};
+
+	// Gameplay components
+	struct PlayerComponent
+	{
+		int health;
+		
+		float fireRate;
+		float lastFire;
 	};
 }

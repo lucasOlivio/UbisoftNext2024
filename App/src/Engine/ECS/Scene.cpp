@@ -53,12 +53,7 @@ namespace MyEngine
             }
 
             // Check which component it is and add to the new entity
-            if (componentType == GetComponentType<TagComponent>())
-            {
-                TagComponent* pTag = AddComponent<TagComponent>(newEntityId);
-                *pTag = *(Get<TagComponent>(entityId));
-            }
-            else if (componentType == GetComponentType<TransformComponent>())
+            if (componentType == GetComponentType<TransformComponent>())
             {
                 TransformComponent* pTransform = AddComponent<TransformComponent>(newEntityId);
                 *pTransform = *(Get<TransformComponent>(entityId));

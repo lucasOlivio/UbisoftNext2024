@@ -1,5 +1,7 @@
 #include "stdafx.h"
+
 #include "RenderSystem.h"
+
 #include "Engine/ECS/SceneView.hpp"
 
 #include <app.h>
@@ -63,6 +65,10 @@ namespace MyEngine
         }
     }
 
+    void RenderSystem::Shutdown()
+    {
+    }
+
     void RenderSystem::m_CreateAnimation(SpriteComponent* pSprite)
     {
         int frame = 0;
@@ -83,9 +89,5 @@ namespace MyEngine
         pSprite->sprite->SetPosition(pTransform->position.x, pTransform->position.y);
         pSprite->sprite->SetAngle(pTransform->angle);
         pSprite->sprite->SetScale(pTransform->scale);
-    }
-
-    void RenderSystem::Shutdown()
-    {
     }
 }

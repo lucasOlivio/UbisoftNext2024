@@ -4,6 +4,8 @@
 
 #include "Engine/ECS/SceneView.hpp"
 
+#include <app.h>
+
 namespace MyEngine
 {
     void MovementSystem::Init()
@@ -16,14 +18,27 @@ namespace MyEngine
 
     void MovementSystem::Update(Scene* pScene, float deltaTime)
     {
-        deltaTime = deltaTime / 1000.0f;
+        deltaTime = deltaTime/ 1000.0f;
         // Update velocity and position
         for (Entity entityId : SceneView<TransformComponent, MovementComponent>(*pScene))
         {
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
             MovementComponent* pMovement = pScene->Get<MovementComponent>(entityId);
 
-            pMovement->velocity = pMovement->velocity + (pMovement->acceleration * deltaTime);
+            Vec2 newVelocity = pMovement->velocity + (pMovement->acceleration * deltaTime);
+            Vec2 dragForce = newVelocity * -(pMovement->drag * deltaTime);
+            pMovement->velocity = newVelocity + dragForce;
+            
+            float currentSpeed = pMovement->velocity.Length();
+            if (currentSpeed > pMovement->maxSpeed)
+            {
+                pMovement->velocity = pMovement->velocity.Normalize() * pMovement->maxSpeed;
+            }
+            else if (currentSpeed <= 5.0f)
+            {
+                pMovement->velocity = Vec2(0.0f, 0.0f);
+            }
+
             pTransform->position = pTransform->position + (pMovement->velocity * deltaTime);
         }
     }

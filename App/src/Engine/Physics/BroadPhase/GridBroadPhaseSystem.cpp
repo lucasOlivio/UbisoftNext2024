@@ -38,12 +38,6 @@ namespace MyEngine
 
 	void GridBroadPhaseSystem::Update(Scene* pScene, float deltaTime)
 	{
-		StateComponent* pState = CoreLocator::GetState();
-		if (pState->currState == eStates::SIMULATION_STOPPED)
-		{
-			return;
-		}
-
 		GridBroadphaseComponent* pGrid = PhysicsLocator::GetGridBroadphase();
 		NarrowPhaseTestsComponent* pNarrowTests = PhysicsLocator::GetNarrowPhaseTests();
 

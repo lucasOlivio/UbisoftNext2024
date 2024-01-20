@@ -6,7 +6,6 @@
 #include "Engine/Events/EventBusLocator.hpp"
 
 #include "Engine/ECS/SingletonComponents/CoreLocator.h"
-#include "Engine/ECS/SingletonComponents/GraphicsLocator.h"
 #include "Engine/ECS/SingletonComponents/PhysicsLocator.h"
 
 namespace MyEngine
@@ -54,12 +53,6 @@ namespace MyEngine
         // Setting up events
         m_pEventBusCollision = new EventBus<eCollisionEvents, CollisionEnterEvent>();
         EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Set(m_pEventBusCollision);
-
-        m_pEventBusStoppedState = new EventBus<eStateChangeEvents, StoppedStateEvent>();
-        EventBusLocator<eStateChangeEvents, StoppedStateEvent>::Set(m_pEventBusStoppedState);
-
-        m_pEventBusRunningState = new EventBus<eStateChangeEvents, RunningStateEvent>();
-        EventBusLocator<eStateChangeEvents, RunningStateEvent>::Set(m_pEventBusRunningState);
     }
 
     void Engine::Update(float deltaTime)
@@ -91,13 +84,10 @@ namespace MyEngine
 
         // Delete singleton components
         CoreLocator::Clear();
-        GraphicsLocator::Clear();
         PhysicsLocator::Clear();
 
         // Delete event bus
         delete m_pEventBusCollision;
-        delete m_pEventBusStoppedState;
-        delete m_pEventBusRunningState;
 
         delete m_pScene;
     }

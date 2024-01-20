@@ -18,7 +18,7 @@ namespace MyEngine
 
     void RotationSystem::Update(Scene* pScene, float deltaTime)
     {
-        deltaTime = deltaTime / 1000.0f;
+        deltaTime = deltaTime/ 1000.0f;
         // Update velocity and position
         for (Entity entityId : SceneView<TransformComponent, RotationComponent>(*pScene))
         {
@@ -26,6 +26,8 @@ namespace MyEngine
             RotationComponent* pRotation = pScene->Get<RotationComponent>(entityId);
 
             pRotation->velocity = pRotation->velocity + (pRotation->acceleration * deltaTime);
+            pRotation->velocity = pRotation->velocity * -(pRotation->drag * deltaTime);
+
             pTransform->angle = pTransform->angle + (pRotation->velocity * deltaTime);
 
             if (pTransform->angle > 359.9f)
