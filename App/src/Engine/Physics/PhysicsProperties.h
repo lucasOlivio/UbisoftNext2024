@@ -20,5 +20,15 @@ namespace MyEngine
 		Scene* pScene;
 		Entity entityActive;
 		Entity entityPassive;
+
+		bool operator==(const sCollisionData& other) const
+		{
+			return entityActive == other.entityActive && entityPassive == other.entityPassive;
+		}
+
+		bool operator<(const sCollisionData& other) const
+		{
+			return entityPassive < other.entityPassive;
+		}
 	};
 }

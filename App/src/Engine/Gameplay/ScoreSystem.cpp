@@ -41,6 +41,7 @@ namespace MyEngine
     void ScoreSystem::OnCollision(const CollisionEnterEvent& event)
     {
         Scene* pScene = event.collisionData.pScene;
+        Entity entityActive = event.collisionData.entityActive;
         Entity entityPassive = event.collisionData.entityPassive;
 
         PointComponent* pPoint = pScene->Get<PointComponent>(entityPassive);
@@ -51,5 +52,10 @@ namespace MyEngine
         }
 
         Entity playerId = GameplayUtils::GetPlayerId(pScene);
+        PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(playerId);
+
+        pPlayer->score += pPoint->points;
+
+        LOG_DEBUG("Score: " + std::to_string(pPlayer->score));
     }
 }

@@ -35,7 +35,7 @@ namespace MyEngine
                 return;
             }
 
-            for (const auto& handler : m_subscribers[event.GetType()])
+            for (const EventHandler& handler : m_subscribers[event.GetType()])
             {
                 // Process until hadled or reach end of listeners
                 if (event.IsHandled())

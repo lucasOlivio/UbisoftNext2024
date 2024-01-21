@@ -58,7 +58,7 @@ namespace MyEngine
 	// All collisions that happened in the last <FRAME_RATE> frames
 	struct FrameCollisionComponent
 	{
-		std::vector<sCollisionData> collisions[FRAME_RATE];
+		std::set<sCollisionData> collisions[FRAME_RATE];
 		size_t currSize;
 	};
 

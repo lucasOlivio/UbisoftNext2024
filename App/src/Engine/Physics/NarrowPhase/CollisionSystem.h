@@ -27,8 +27,11 @@ namespace MyEngine
 		// Use the event bus to trigger a collision event with this event data
 		void m_TriggerCollisionEnter(const sCollisionData& collData);
 
+		// Returns false if the collision is duplicated
+		bool m_RegisterFrameCollision(const sCollisionData& collData);
+
 		// Sphere checks
-		void m_CheckSphereOverlaps(Scene* pScene,
+		void m_CheckSphereCollision(Scene* pScene,
 								   Entity entityIdActive,
 								   Vec2 positionActive,
 								   float radiusActive,

@@ -38,7 +38,7 @@ namespace MyEngine
                 RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
 
                 // Check allies against enemies only
-                m_CheckSphereOverlaps(pScene, entityId, pTransform->position, pRigidBody->radius, i,
+                m_CheckSphereCollision(pScene, entityId, pTransform->position, pRigidBody->radius, i,
                                       allyGroup,
                                       enemyGroup);
 
@@ -67,7 +67,19 @@ namespace MyEngine
         pEventBus->Publish(collEvent);
     }
 
-    void CollisionSystem::m_CheckSphereOverlaps(Scene* pScene,
+    bool CollisionSystem::m_RegisterFrameCollision(const sCollisionData& collData)
+    {
+        FrameCollisionComponent* pFrameColl = PhysicsLocator::GetFrameCollision();
+        FrameCounterComponent* pFrames = CoreLocator::GetFrameCounter();
+
+        // Module to make sure we stay in FRAME_RATE size
+        int currFrame = pFrames->frameCount % FRAME_RATE;
+        bool isNewCollision = pFrameColl->collisions[currFrame].insert(collData).second;
+        
+        return isNewCollision;
+    }
+
+    void CollisionSystem::m_CheckSphereCollision(Scene* pScene,
 								                Entity entityIdActive,
 								                Vec2 positionActive,
                                                 float radiusActive,
@@ -83,6 +95,24 @@ namespace MyEngine
                                                           positionActive,
                                                           radiusActive, 
                                                           entityIdPassive);
+            
+            if (!isCollision)
+            {
+                continue;
+            }
+
+            sCollisionData collData = sCollisionData();
+            collData.pScene = pScene;
+            collData.entityActive = entityIdActive;
+            collData.entityPassive = entityIdPassive;
+
+            bool isNewCollision = m_RegisterFrameCollision(collData);
+            if (!isNewCollision)
+            {
+                continue;
+            }
+
+            m_TriggerCollisionEnter(collData);
         }
     }
 
@@ -102,18 +132,6 @@ namespace MyEngine
                                                             pRigidBodyPassive->radius,
                                                             pTransformPassive->position);
 
-        if (!isCollision)
-        {
-            return false;
-        }
-
-        sCollisionData collData = sCollisionData();
-        collData.pScene = pScene;
-        collData.entityActive = entityIdActive;
-        collData.entityPassive = entityIdPassive;
-
-        m_TriggerCollisionEnter(collData);
-
-        return true;
+        return isCollision;
     }
 }

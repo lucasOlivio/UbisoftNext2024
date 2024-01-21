@@ -24,6 +24,7 @@
 #include "Engine/Gameplay/ZombieSpawnSystem.h"
 #include "Engine/Gameplay/FollowTargetSystem.h"
 #include "Engine/Gameplay/DestructionSystem.h"
+#include "Engine/Gameplay/ScoreSystem.h"
 
 #include "Engine/Utils/Random.h"
 
@@ -110,16 +111,18 @@ void Init()
 	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
 	FollowTargetSystem* pFollowTargetSystem = new FollowTargetSystem();
 	DestructionSystem* pDestructionSystem = new DestructionSystem();
+	ScoreSystem* pScoreSystem = new ScoreSystem();
 
 	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pZombieSpawnSystem, pScene);
 	gEngine->AddSystem(pFollowTargetSystem, pScene);
 	gEngine->AddSystem(pDestructionSystem, pScene);
+	gEngine->AddSystem(pScoreSystem, pScene);
 
 	// Core systems
 	FrameSystem* pFrameSystem = new FrameSystem();
 
-	gEngine->AddSystem(pFrameSystem, pScene);
+	//gEngine->AddSystem(pFrameSystem, pScene);
 
 #ifdef _DEBUG
 	// Debug systems
