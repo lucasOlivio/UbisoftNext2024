@@ -11,6 +11,8 @@ namespace MyEngine
 		CollisionSystem() = default;
 		virtual ~CollisionSystem() { };
 
+		virtual std::string SystemName() { return "CollisionSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

@@ -5,34 +5,12 @@
 //------------------------------------------------------------------------
 #include <app.h>
 //------------------------------------------------------------------------
-#include "Engine/Core/Engine.h"
-#include "Engine/Core/FrameSystem.h"
+#include "Engine/Core/EngineLocator.h"
+#include "Engine/Core/SystemFactory.h"
 
 #include "Engine/ECS/Components.h"
 
-#include "Engine/Graphics/RenderSystem.h"
-
-#include "Engine/Physics/MovementSystem.h"
-#include "Engine/Physics/RotationSystem.h"
-#include "Engine/Physics/BroadPhase/GridBroadPhaseSystem.h"
-#include "Engine/Physics/NarrowPhase/CollisionSystem.h"
-
-#include "Engine/Debug/ConsoleSystem.h"
-#include "Engine/Debug/DrawGridSystem.h"
-
-#include "Engine/Gameplay/PlayerControllerSystem.h"
-#include "Engine/Gameplay/ZombieSpawnSystem.h"
-#include "Engine/Gameplay/FollowTargetSystem.h"
-#include "Engine/Gameplay/DestructionSystem.h"
-#include "Engine/Gameplay/ScoreSystem.h"
-#include "Engine/Gameplay/PlayerHealthSystem.h"
-#include "Engine/Gameplay/StateSystem.h"
-#include "Engine/Gameplay/UI/PlayerUISystem.h"
-#include "Engine/Gameplay/UI/GameStateUISystem.h"
-
 #include "Engine/Utils/Random.h"
-
-MyEngine::Engine* gEngine;
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -41,13 +19,14 @@ void Init()
 {
 	using namespace MyEngine;
 
-	gEngine = new Engine();
+	MyEngine::Engine* pEngine = new Engine();
+	EngineLocator::Set(pEngine);
 
 	// Initialize engine
-	gEngine->Init();
+	pEngine->Init();
 
 	// Setup scene
-	Scene* pScene = gEngine->GetScene();
+	Scene* pScene = pEngine->GetScene();
 
 	// Background
 	Entity entityIdbackground = pScene->CreateEntity();
@@ -92,61 +71,25 @@ void Init()
 	pRigidBody->bodyType = eBody::ACTIVE;
 	pRigidBody->radius = 25.0f;
 
-	// Create systems
-
-	// Graphics systems
-	RenderSystem* pRenderSystem = new RenderSystem();
-
-	gEngine->AddSystem(pRenderSystem, pScene);
-	
-	// Physics systems
-	MovementSystem* pMovementSystem = new MovementSystem();
-	RotationSystem* pRotationSystem = new RotationSystem();
-	GridBroadPhaseSystem* pGridBroadPhaseSystem = new GridBroadPhaseSystem();
-	CollisionSystem* pCollisionSystem = new CollisionSystem();
-
-	gEngine->AddSystem(pMovementSystem, pScene);
-	gEngine->AddSystem(pRotationSystem, pScene);
-	gEngine->AddSystem(pGridBroadPhaseSystem, pScene);
-	gEngine->AddSystem(pCollisionSystem, pScene);
-
-	// Gameplay systems
-	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
-	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
-	FollowTargetSystem* pFollowTargetSystem = new FollowTargetSystem();
-	DestructionSystem* pDestructionSystem = new DestructionSystem();
-	ScoreSystem* pScoreSystem = new ScoreSystem();
-	PlayerHealthSystem* pPlayerHealthSystem = new PlayerHealthSystem();
-	StateSystem* pStateSystem = new StateSystem();
-
-	PlayerUISystem* pPlayerUISystem = new PlayerUISystem();
-	GameStateUISystem* pGameStateUISystem = new GameStateUISystem();
-
-	gEngine->AddSystem(pPlayerControllerSystem, pScene);
-	gEngine->AddSystem(pZombieSpawnSystem, pScene);
-	gEngine->AddSystem(pFollowTargetSystem, pScene);
-	gEngine->AddSystem(pDestructionSystem, pScene);
-	gEngine->AddSystem(pScoreSystem, pScene);
-	gEngine->AddSystem(pPlayerHealthSystem, pScene);
-	gEngine->AddSystem(pStateSystem, pScene);
-
-	gEngine->AddSystem(pPlayerUISystem, pScene);
-	gEngine->AddSystem(pGameStateUISystem, pScene);
+	// Create base systems
 
 	// Core systems
-	FrameSystem* pFrameSystem = new FrameSystem();
+	pEngine->AddSystem(SystemFactory::CreateSystem("CoreSystem"), pScene);
+	pEngine->AddSystem(SystemFactory::CreateSystem("StateSystem"), pScene);
+	pEngine->AddSystem(SystemFactory::CreateSystem("FrameSystem"), pScene);
 
-	gEngine->AddSystem(pFrameSystem, pScene);
+	// Graphics systems
+	pEngine->AddSystem(SystemFactory::CreateSystem("RenderSystem"), pScene);
+
+	// Gameplay systems
+	pEngine->AddSystem(SystemFactory::CreateSystem("GameStateUISystem"), pScene);
+	pEngine->AddSystem(SystemFactory::CreateSystem("LevelSystem"), pScene);
 
 #ifdef _DEBUG
 	// Debug systems
-	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
-	DrawGridSystem* pDrawGridSystem = new DrawGridSystem();
-
-	gEngine->AddSystem(pConsoleSystem, pScene);
-	gEngine->AddSystem(pDrawGridSystem, pScene);
+	pEngine->AddSystem(SystemFactory::CreateSystem("ConsoleSystem"), pScene);
+	pEngine->AddSystem(SystemFactory::CreateSystem("DrawGridSystem"), pScene);
 #endif
-
 }
 
 //------------------------------------------------------------------------
@@ -155,7 +98,10 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-	gEngine->Update(deltaTime);
+	using namespace MyEngine;
+
+	Engine* pEngine = EngineLocator::Get();
+	pEngine->Update(deltaTime);
 }
 
 //------------------------------------------------------------------------
@@ -164,7 +110,10 @@ void Update(float deltaTime)
 //------------------------------------------------------------------------
 void Render()
 {
-	gEngine->Render();
+	using namespace MyEngine;
+
+	Engine* pEngine = EngineLocator::Get();
+	pEngine->Render();
 }
 
 //------------------------------------------------------------------------
@@ -173,5 +122,10 @@ void Render()
 //------------------------------------------------------------------------
 void Shutdown()
 {
-	gEngine->Shutdown();
+	using namespace MyEngine;
+
+	Engine* pEngine = EngineLocator::Get();
+	pEngine->Shutdown();
+
+	delete pEngine;
 }

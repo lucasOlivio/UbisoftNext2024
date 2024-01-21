@@ -4,6 +4,7 @@
 
 #include "Engine/ECS/Scene.h"
 
+#include "Engine/Events/GameStateEvent.h"
 #include "Engine/Events/CollisionEvent.h"
 #include "Engine/Events/iEventBus.h"
 
@@ -19,7 +20,7 @@ namespace MyEngine
 		// Systems that will manipulate components and handle the scene in some way,
 		// the system is added and initialized, if the scene is passed the system is also started
 		void AddSystem(iSystem* pSystem, Scene* pScene);
-		void RemoveSystem(iSystem* pSystem, Scene* pScene);
+		void RemoveSystem(std::string systemName, Scene* pScene);
 
 		void Init();
 
@@ -45,5 +46,10 @@ namespace MyEngine
 
 		// Events
 		iEventBus<eCollisionEvents, CollisionEnterEvent>* m_pEventBusCollision;
+
+		iEventBus<eGameStateEvents, GameStartedEvent>* m_pEventBusGameStarted;
+		iEventBus<eGameStateEvents, GameRunningEvent>* m_pEventBusGameRunning;
+		iEventBus<eGameStateEvents, GameLevelUpEvent>* m_pEventBusGameLevelUp;
+		iEventBus<eGameStateEvents, GameOverEvent>* m_pEventBusGameOver;
 	};
 }

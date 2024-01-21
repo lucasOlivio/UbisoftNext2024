@@ -12,7 +12,7 @@
 namespace MyEngine
 {
     const float ZOMBIE_SPAWN_DISTANCE = 650.0f;
-    const float ZOMBIE_SPAWN_RATE = 0.02f;
+    const float ZOMBIE_SPAWN_RATE = 0.1f;
     const float ZOMBIE_INITIAL_SPEED = 100.0f;
     const int MAX_ZOMBIES = 250;
 

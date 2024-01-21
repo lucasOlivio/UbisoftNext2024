@@ -13,6 +13,8 @@ namespace MyEngine
 		StateSystem() = default;
 		virtual ~StateSystem() { };
 
+		virtual std::string SystemName() { return "StateSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);
@@ -26,6 +28,6 @@ namespace MyEngine
 		virtual void Shutdown();
 
 	private:
-		static void m_TriggerStateChange(const eGameStates& newState);
+		static void m_TriggerStateChange(Scene* pScene, const eGameStates& newState);
 	};
 }

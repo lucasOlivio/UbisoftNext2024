@@ -15,6 +15,8 @@ namespace MyEngine
 		ScoreSystem() = default;
 		virtual ~ScoreSystem() { };
 
+		virtual std::string SystemName() { return "ScoreSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

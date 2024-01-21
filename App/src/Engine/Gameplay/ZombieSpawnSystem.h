@@ -13,6 +13,8 @@ namespace MyEngine
 		ZombieSpawnSystem() = default;
 		virtual ~ZombieSpawnSystem() { };
 
+		virtual std::string SystemName() { return "ZombieSpawnSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

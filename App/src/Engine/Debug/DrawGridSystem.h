@@ -11,6 +11,8 @@ namespace MyEngine
 		DrawGridSystem() = default;
 		virtual ~DrawGridSystem() { };
 
+		virtual std::string SystemName() { return "DrawGridSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

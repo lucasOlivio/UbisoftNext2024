@@ -11,6 +11,8 @@ namespace MyEngine
 		GameStateUISystem() = default;
 		virtual ~GameStateUISystem() { };
 
+		virtual std::string SystemName() { return "GameStateUISystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

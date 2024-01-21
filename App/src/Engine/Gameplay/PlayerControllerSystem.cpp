@@ -14,7 +14,7 @@
 
 namespace MyEngine
 {
-    const int PLAYER_MAX_HEALTH = 200;
+    const int PLAYER_MAX_HEALTH = 10;
     const float PLAYER_FIRERATE = 0.1f;
     const int PLAYER_TOTAL_BULLETS = 200;
 
@@ -61,7 +61,7 @@ namespace MyEngine
             pPlayer->fireRate = PLAYER_FIRERATE;
             pPlayer->lastFire = PLAYER_FIRERATE;
             pPlayer->currentAmmo = PLAYER_TOTAL_BULLETS;
-            pPlayer->totalAmmo = PLAYER_TOTAL_BULLETS;
+            pPlayer->maxAmmo = PLAYER_TOTAL_BULLETS;
         }
 
         return;

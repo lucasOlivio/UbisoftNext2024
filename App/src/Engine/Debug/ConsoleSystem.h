@@ -11,6 +11,8 @@ namespace MyEngine
 		ConsoleSystem() = default;
 		virtual ~ConsoleSystem() { };
 
+		virtual std::string SystemName() { return "ConsoleSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

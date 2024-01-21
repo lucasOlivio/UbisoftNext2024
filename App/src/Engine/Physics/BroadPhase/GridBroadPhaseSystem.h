@@ -21,6 +21,8 @@ namespace MyEngine
 		GridBroadPhaseSystem() = default;
 		virtual ~GridBroadPhaseSystem() {};
 
+		virtual std::string SystemName() { return "GridBroadPhaseSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

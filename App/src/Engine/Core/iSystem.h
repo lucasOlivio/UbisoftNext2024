@@ -11,6 +11,8 @@ namespace MyEngine
 		iSystem() = default;
 		virtual ~iSystem() { };
 
+		virtual std::string SystemName() = 0;
+
 		// Initializes the system before scene loading
 		virtual void Init() = 0;
 

@@ -13,6 +13,8 @@ namespace MyEngine
 		FollowTargetSystem() = default;
 		virtual ~FollowTargetSystem() { };
 
+		virtual std::string SystemName() { return "FollowTargetSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

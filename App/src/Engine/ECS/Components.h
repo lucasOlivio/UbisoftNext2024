@@ -73,7 +73,7 @@ namespace MyEngine
 		float fireRate;
 		float lastFire;
 
-		int totalAmmo;
+		int maxAmmo;
 		int currentAmmo;
 
 		int score;

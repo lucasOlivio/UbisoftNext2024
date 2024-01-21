@@ -12,6 +12,8 @@ namespace MyEngine
 		RenderSystem() = default;
 		virtual ~RenderSystem() { };
 
+		virtual std::string SystemName() { return "RenderSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

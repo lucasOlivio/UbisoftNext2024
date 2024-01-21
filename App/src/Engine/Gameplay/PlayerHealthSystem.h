@@ -15,6 +15,8 @@ namespace MyEngine
 		PlayerHealthSystem() = default;
 		virtual ~PlayerHealthSystem() { };
 
+		virtual std::string SystemName() { return "PlayerHealthSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

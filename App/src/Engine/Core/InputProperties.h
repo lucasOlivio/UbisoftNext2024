@@ -8,6 +8,7 @@ namespace MyEngine
         SPACE = 32,
         A = 65,
         D = 68,
+        E = 69,
         S = 83,
         W = 87
     };

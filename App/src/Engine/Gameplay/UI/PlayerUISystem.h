@@ -13,6 +13,8 @@ namespace MyEngine
 		PlayerUISystem() = default;
 		virtual ~PlayerUISystem() { };
 
+		virtual std::string SystemName() { return "PlayerUISystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

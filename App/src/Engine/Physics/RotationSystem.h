@@ -11,6 +11,8 @@ namespace MyEngine
 		RotationSystem() = default;
 		virtual ~RotationSystem() { };
 
+		virtual std::string SystemName() { return "RotationSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

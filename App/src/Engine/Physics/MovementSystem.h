@@ -12,6 +12,8 @@ namespace MyEngine
 		MovementSystem() = default;
 		virtual ~MovementSystem() { };
 
+		virtual std::string SystemName() { return "MovementSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

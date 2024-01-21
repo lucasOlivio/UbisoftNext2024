@@ -29,11 +29,11 @@ namespace MyEngine
         pSystem->Start(pScene);
     }
 
-    void Engine::RemoveSystem(iSystem* pSystem, Scene* pScene)
+    void Engine::RemoveSystem(std::string systemName, Scene* pScene)
     {
         for (int i = 0; i < m_systems.size(); i++)
         {
-            if (m_systems[i] != pSystem)
+            if (m_systems[i]->SystemName() != systemName)
             {
                 continue;
             }
@@ -55,13 +55,23 @@ namespace MyEngine
         // Setting up events
         m_pEventBusCollision = new EventBus<eCollisionEvents, CollisionEnterEvent>();
         EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Set(m_pEventBusCollision);
+
+        m_pEventBusGameStarted = new EventBus<eGameStateEvents, GameStartedEvent>();
+        m_pEventBusGameRunning = new EventBus<eGameStateEvents, GameRunningEvent>();
+        m_pEventBusGameLevelUp = new EventBus<eGameStateEvents, GameLevelUpEvent>();
+        m_pEventBusGameOver = new EventBus<eGameStateEvents, GameOverEvent>();
+
+        EventBusLocator<eGameStateEvents, GameStartedEvent>::Set(m_pEventBusGameStarted);
+        EventBusLocator<eGameStateEvents, GameRunningEvent>::Set(m_pEventBusGameRunning);
+        EventBusLocator<eGameStateEvents, GameLevelUpEvent>::Set(m_pEventBusGameLevelUp);
+        EventBusLocator<eGameStateEvents, GameOverEvent>::Set(m_pEventBusGameOver);
     }
 
     void Engine::Update(float deltaTime)
     {
-        for (iSystem* pSystem : m_systems)
+        for (int i = 0; i < m_systems.size(); i++)
         {
-            pSystem->Update(m_pScene, deltaTime);
+            m_systems[i]->Update(m_pScene, deltaTime);
         }
 
         // Remove entities marked
@@ -70,9 +80,9 @@ namespace MyEngine
 
     void Engine::Render()
     {
-        for (iSystem* pSystem : m_systems)
+        for (int i = 0; i < m_systems.size(); i++)
         {
-            pSystem->Render(m_pScene);
+            m_systems[i]->Render(m_pScene);
         }
     }
 
@@ -81,11 +91,6 @@ namespace MyEngine
         EndSystems(m_pScene);
 
         ShutdownSystems();
-
-        for (iSystem* pSystem : m_systems)
-        {
-            delete pSystem;
-        }
 
         // Delete singleton components
         CoreLocator::Clear();
@@ -96,30 +101,35 @@ namespace MyEngine
         // Delete event bus
         delete m_pEventBusCollision;
 
+        delete m_pEventBusGameStarted;
+        delete m_pEventBusGameRunning;
+        delete m_pEventBusGameLevelUp;
+        delete m_pEventBusGameOver;
+
         delete m_pScene;
     }
 
     void Engine::StartSystems(Scene* pScene)
     {
-        for (iSystem* pSystem : m_systems)
+        for (int i = 0; i < m_systems.size(); i++)
         {
-            pSystem->Start(pScene);
+            m_systems[i]->Start(m_pScene);
         }
     }
 
     void Engine::EndSystems(Scene* pScene)
     {
-        for (iSystem* pSystem : m_systems)
+        for (int i = 0; i < m_systems.size(); i++)
         {
-            pSystem->End(pScene);
+            m_systems[i]->End(m_pScene);
         }
     }
 
     void Engine::ShutdownSystems()
     {
-        for (iSystem* pSystem : m_systems)
+        for (int i = 0; i < m_systems.size(); i++)
         {
-            pSystem->Shutdown();
+            m_systems[i]->Shutdown();
         }
     }
 

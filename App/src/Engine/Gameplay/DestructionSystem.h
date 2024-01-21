@@ -15,6 +15,8 @@ namespace MyEngine
 		DestructionSystem() = default;
 		virtual ~DestructionSystem() { };
 
+		virtual std::string SystemName() { return "DestructionSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);

@@ -13,6 +13,8 @@ namespace MyEngine
 		PlayerControllerSystem() = default;
 		virtual ~PlayerControllerSystem() { };
 
+		virtual std::string SystemName() { return "PlayerControllerSystem"; };
+
 		virtual void Init();
 
 		virtual void Start(Scene* pScene);
