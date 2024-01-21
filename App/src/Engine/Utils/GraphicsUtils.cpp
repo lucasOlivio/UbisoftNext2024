@@ -6,7 +6,7 @@
 
 namespace MyEngine
 {
-    void GraphicsUtils::UpdateAnimation(SpriteComponent* pSprite, TransformComponent* pTransform, float deltaTime)
+    void GraphicsUtils::UpdateAnimation(SpriteComponent* pSprite, TransformComponent* pTransform, const float& deltaTime)
     {
         pSprite->sprite->SetPosition(pTransform->position.x, pTransform->position.y);
         pSprite->sprite->SetAngle(pTransform->angle);
@@ -58,5 +58,19 @@ namespace MyEngine
         App::DrawLine(max.x, min.y, max.x, max.y, color[0], color[1], color[2]);
         App::DrawLine(max.x, max.y, min.x, max.y, color[0], color[1], color[2]);
         App::DrawLine(min.x, max.y, min.x, min.y, color[0], color[1], color[2]);
+    }
+
+    void GraphicsUtils::PrintBarWidget(const std::string& label, const int& size, 
+                                       const float& x, const float& y, const float color[3])
+    {
+        float labelPadding = 75.0f;
+
+        std::string progressBar = std::string(size, '|');
+
+        // Print the label
+        App::Print(x, y, label.c_str(), color[0], color[1], color[2]);
+
+        // Print the progress bar
+        App::Print(x + labelPadding, y, progressBar.c_str(), color[0], color[1], color[2]);
     }
 }

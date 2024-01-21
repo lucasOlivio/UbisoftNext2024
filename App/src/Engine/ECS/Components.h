@@ -67,6 +67,7 @@ namespace MyEngine
 	// Gameplay components
 	struct PlayerComponent
 	{
+		int maxHealth;
 		int health;
 		
 		float fireRate;

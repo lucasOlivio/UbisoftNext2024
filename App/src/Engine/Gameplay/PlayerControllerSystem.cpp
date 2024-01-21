@@ -14,9 +14,9 @@
 
 namespace MyEngine
 {
-    const int PLAYER_MAX_HEALTH = 100;
+    const int PLAYER_MAX_HEALTH = 200;
     const float PLAYER_FIRERATE = 0.1f;
-    const int PLAYER_TOTAL_BULLETS = 1000;
+    const int PLAYER_TOTAL_BULLETS = 200;
 
     const float PLAYER_ACCELERATION = 100.0f;
     const float PLAYER_DRAG = 5.0f;
@@ -56,6 +56,7 @@ namespace MyEngine
             pMovement->maxSpeed = PLAYER_MAX_SPEED;
             pMovement->maxAcceleration = PLAYER_MAX_ACCELERATION;
 
+            pPlayer->maxHealth = PLAYER_MAX_HEALTH;
             pPlayer->health = PLAYER_MAX_HEALTH;
             pPlayer->fireRate = PLAYER_FIRERATE;
             pPlayer->lastFire = PLAYER_FIRERATE;

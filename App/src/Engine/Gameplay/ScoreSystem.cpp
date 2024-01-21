@@ -55,7 +55,5 @@ namespace MyEngine
         PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(playerId);
 
         pPlayer->score += pPoint->points;
-
-        LOG_DEBUG("Score: " + std::to_string(pPlayer->score));
     }
 }
