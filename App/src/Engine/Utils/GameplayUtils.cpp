@@ -15,6 +15,7 @@ const float ZOMBIE_RADIUS = 25.0f;
 const float BULLET_RADIUS = 10.0f;
 
 const int ZOMBIE_POINTS = 1;
+const int ZOMBIE_DAMAGE = 1;
 
 namespace MyEngine
 {
@@ -43,6 +44,9 @@ namespace MyEngine
 
 		PointComponent* pPoint = pScene->AddComponent< PointComponent>(zombieId);
 		pPoint->points = ZOMBIE_POINTS;
+
+		EnemyComponent* pEnemy = pScene->AddComponent< EnemyComponent>(zombieId);
+		pEnemy->damage = ZOMBIE_DAMAGE;
 
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(zombieId);
 		pSprite->name = DEFAULT_SPRITE_PATH + ZOMBIE_SPRITE;

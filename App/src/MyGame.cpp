@@ -25,7 +25,10 @@
 #include "Engine/Gameplay/FollowTargetSystem.h"
 #include "Engine/Gameplay/DestructionSystem.h"
 #include "Engine/Gameplay/ScoreSystem.h"
+#include "Engine/Gameplay/PlayerHealthSystem.h"
+#include "Engine/Gameplay/StateSystem.h"
 #include "Engine/Gameplay/UI/PlayerUISystem.h"
+#include "Engine/Gameplay/UI/GameStateUISystem.h"
 
 #include "Engine/Utils/Random.h"
 
@@ -113,14 +116,22 @@ void Init()
 	FollowTargetSystem* pFollowTargetSystem = new FollowTargetSystem();
 	DestructionSystem* pDestructionSystem = new DestructionSystem();
 	ScoreSystem* pScoreSystem = new ScoreSystem();
+	PlayerHealthSystem* pPlayerHealthSystem = new PlayerHealthSystem();
+	StateSystem* pStateSystem = new StateSystem();
+
 	PlayerUISystem* pPlayerUISystem = new PlayerUISystem();
+	GameStateUISystem* pGameStateUISystem = new GameStateUISystem();
 
 	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pZombieSpawnSystem, pScene);
 	gEngine->AddSystem(pFollowTargetSystem, pScene);
 	gEngine->AddSystem(pDestructionSystem, pScene);
 	gEngine->AddSystem(pScoreSystem, pScene);
+	gEngine->AddSystem(pPlayerHealthSystem, pScene);
+	gEngine->AddSystem(pStateSystem, pScene);
+
 	gEngine->AddSystem(pPlayerUISystem, pScene);
+	gEngine->AddSystem(pGameStateUISystem, pScene);
 
 	// Core systems
 	FrameSystem* pFrameSystem = new FrameSystem();

@@ -93,4 +93,9 @@ namespace MyEngine
 	{
 		int damage;
 	};
+
+	struct EnemyComponent
+	{
+		int damage;
+	};
 }

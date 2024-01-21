@@ -4,6 +4,8 @@
 
 #include "Engine/ECS/Base.h"
 
+#include "Engine/Gameplay/GameplayProperties.h"
+
 #include "Engine/Physics/BroadPhase/GridAABB.h"
 #include "Engine/Physics/PhysicsProperties.h"
 
@@ -74,5 +76,11 @@ namespace MyEngine
 
 		float spawnDistance; // Radius from window center
 		float initialZombieSpeed;
+	};
+
+	struct GameStateComponent
+	{
+		eGameStates prevState; // Only state system should modify this
+		eGameStates currState; // Any system can modify this to stop/run simulation
 	};
 }
