@@ -12,25 +12,25 @@
 
 #include <app.h>
 
-const int PLAYER_MAX_HEALTH = 100;
-const float PLAYER_FIRERATE = 0.2f; // Shots per second
-const int PLAYER_TOTAL_BULLETS = 100;
-
-const float PLAYER_ACCELERATION = 100.0f;
-const float PLAYER_DRAG = 5.0f;
-const float PLAYER_MAX_SPEED = 300.0f;
-const float PLAYER_MAX_ACCELERATION = 1500.0f;
-
-const float PLAYER_ROTATION_ACCELERATION = 1.0f;
-const float PLAYER_ROTATION_DRAG = 5.0f;
-const float PLAYER_MAX_ROTATION_SPEED = 3.0f;
-const float PLAYER_MAX_ROTATION_ACCELERATION = 15.0f;
-
-const float BULLET_SPEED = 600.0f;
-const int BULLET_DAMAGE = 10;
-
 namespace MyEngine
 {
+    const int PLAYER_MAX_HEALTH = 100;
+    const float PLAYER_FIRERATE = 0.1f; // Shots per second
+    const int PLAYER_TOTAL_BULLETS = 1000;
+
+    const float PLAYER_ACCELERATION = 100.0f;
+    const float PLAYER_DRAG = 5.0f;
+    const float PLAYER_MAX_SPEED = 300.0f;
+    const float PLAYER_MAX_ACCELERATION = 1500.0f;
+
+    const float PLAYER_ROTATION_ACCELERATION = 1.0f;
+    const float PLAYER_ROTATION_DRAG = 5.0f;
+    const float PLAYER_MAX_ROTATION_SPEED = 3.0f;
+    const float PLAYER_MAX_ROTATION_ACCELERATION = 15.0f;
+
+    const float BULLET_SPEED = 600.0f;
+    const int BULLET_DAMAGE = 10;
+
     void PlayerControllerSystem::Init()
     {
     }
@@ -151,7 +151,7 @@ namespace MyEngine
 
         // Create projectile in front of player
         GameplayUtils::CreateProjectile(pScene, 
-                                        pTransform->position + (playerDirection * pRigidBody->radius), 
+                                        pTransform->position + (playerDirection * pRigidBody->radius) + 1.0f, 
                                         playerDirection, BULLET_SPEED, BULLET_DAMAGE);
 
         pPlayer->lastFire = 0.0f;

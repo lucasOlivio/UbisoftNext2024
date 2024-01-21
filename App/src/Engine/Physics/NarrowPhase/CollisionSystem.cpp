@@ -26,20 +26,21 @@ namespace MyEngine
         NarrowPhaseTestsComponent* pTests = PhysicsLocator::GetNarrowPhaseTests();
 
         // The first layer is the grouping of objects to test
-        for (int group = 0; group < pTests->nonStaticEntitiesToTest.size(); group++)
+        for (int group = 0; group < pTests->allyEntitiesToTest.size(); group++)
         {
-            std::vector<Entity> nonStaticGroup = pTests->nonStaticEntitiesToTest[group];
-            std::vector<Entity> staticGroup = pTests->staticEntitiesToTest[group];
+            std::vector<Entity> allyGroup = pTests->allyEntitiesToTest[group];
+            std::vector<Entity> enemyGroup = pTests->enemyEntitiesToTest[group];
 
-            for (int i = 0; i < nonStaticGroup.size(); i++)
+            for (int i = 0; i < allyGroup.size(); i++)
             {
-                Entity entityId = nonStaticGroup[i];
+                Entity entityId = allyGroup[i];
                 TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
                 RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
 
-                m_CheckSphereOverlaps(pScene, entityId, pTransform, pRigidBody->radius, i,
-                                      nonStaticGroup,
-                                      staticGroup);
+                // Check allies against enemies only
+                m_CheckSphereOverlaps(pScene, entityId, pTransform->position, pRigidBody->radius, i,
+                                      allyGroup,
+                                      enemyGroup);
 
             }
         }
@@ -68,27 +69,17 @@ namespace MyEngine
 
     void CollisionSystem::m_CheckSphereOverlaps(Scene* pScene,
 								                Entity entityIdA,
-                                                TransformComponent* pTransformA,
+								                Vec2 positionA,
                                                 float radiusA,
                                                 const int index,
-                                                const std::vector<Entity>& nonStaticEntities,
-                                                const std::vector<Entity>& staticEntities)
+                                                const std::vector<Entity>& allyEntities,
+                                                const std::vector<Entity>& enemyEntities)
     {
-        // Start from one entity ahead so we dont test repeated
-        for (int j = index + 1; j < nonStaticEntities.size(); j++)
+        for (int j = 0; j < enemyEntities.size(); j++)
         {
-            Entity entityIdB = nonStaticEntities[j];
+            Entity entityIdB = allyEntities[j];
             bool isCollision = m_CheckSphereEntityOverlap(pScene, entityIdA,
-                                                          pTransformA,
-                                                          radiusA, 
-                                                          entityIdB);
-        }
-
-        for (int j = 0; j < staticEntities.size(); j++)
-        {
-            Entity entityIdB = nonStaticEntities[j];
-            bool isCollision = m_CheckSphereEntityOverlap(pScene, entityIdA,
-                                                          pTransformA,
+                                                          positionA,
                                                           radiusA, 
                                                           entityIdB);
         }
@@ -96,7 +87,7 @@ namespace MyEngine
 
     bool CollisionSystem::m_CheckSphereEntityOverlap(Scene* pScene,
 										             Entity entityIdA,
-										             TransformComponent* pTransformA,
+								                     Vec2 positionA,
 										             float radiusA,
 										             Entity entityIdB)
     {
@@ -109,7 +100,7 @@ namespace MyEngine
         // Get the right collider to test against
         bool isCollision = false;
         isCollision = CollisionsUtils::SphereSphere_Overlap(radiusA,
-                                                            pTransformA->position,
+                                                            positionA,
                                                             pRigidBodyB->radius,
                                                             pTransformB->position);
 
@@ -121,11 +112,11 @@ namespace MyEngine
         sCollisionData collData = sCollisionData();
         collData.entityA = entityIdA;
         collData.entityB = entityIdB;
-        collData.collisionNormalA = CollisionsUtils::SphereSphere_Normal(pTransformA->position,
+        collData.collisionNormalA = CollisionsUtils::SphereSphere_Normal(positionA,
                                                                          pTransformB->position);
         collData.collisionNormalB = -collData.collisionNormalA;
         collData.contactPoint = CollisionsUtils::SphereSphere_CollisionPoint(radiusA,
-                                                                             pTransformA->position,
+                                                                             positionA,
                                                                              collData.collisionNormalA,
                                                                              pRigidBodyB->radius,
                                                                              pTransformB->position);

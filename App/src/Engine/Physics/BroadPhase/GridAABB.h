@@ -16,16 +16,16 @@ namespace MyEngine
 		Vec2 minXY;
 		Vec2 maxXY;
 
-		// Any static entities collisions
-		std::set<Entity> vecStaticEntities;
+		// Entities to check
+		std::set<Entity> vecAllyEntities;
 
-		// Any non-static entities collisions
-		std::set<Entity> vecNonStaticEntities;
+		// Entities to be checked against
+		std::set<Entity> vecEnemyEntities;
 
 		size_t Total()
 		{
-			return vecStaticEntities.size() + 
-				   vecNonStaticEntities.size();
+			return vecAllyEntities.size() +
+				   vecEnemyEntities.size();
 		}
 	};
 }

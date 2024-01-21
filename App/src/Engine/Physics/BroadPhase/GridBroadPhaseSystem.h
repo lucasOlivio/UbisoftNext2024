@@ -42,8 +42,7 @@ namespace MyEngine
 		// Calculates all the aabbs that the shape intersects
 		// and inserts into the respective Grid AABB
 		void m_InsertSphere(Entity entityID, uint originIndex,
-							TransformComponent* pTransform, 
-							RigidBodyComponent* pRigidBody,
+							Vec2 position, float radius, eBody bodyType,
 							GridBroadphaseComponent* pGrid);
 
 		// Insert entity in map and active map if not a static body

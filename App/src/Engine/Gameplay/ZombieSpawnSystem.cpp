@@ -9,13 +9,13 @@
 #include "Engine/Utils/GameplayUtils.h"
 #include "Engine/Utils/Random.h"
 
-const float ZOMBIE_SPAWN_DISTANCE = 650.0f;
-const float ZOMBIE_SPAWN_RATE = 0.01f;
-const float ZOMBIE_INITIAL_SPEED = 100.0f;
-const int MAX_ZOMBIES = 1000;
-
 namespace MyEngine
 {
+    const float ZOMBIE_SPAWN_DISTANCE = 650.0f;
+    const float ZOMBIE_SPAWN_RATE = 0.01f;
+    const float ZOMBIE_INITIAL_SPEED = 100.0f;
+    const int MAX_ZOMBIES = 1000;
+
     void ZombieSpawnSystem::Init()
     {
     }

@@ -49,10 +49,10 @@ namespace MyEngine
 	// Generic grouping for any narrow phase testing 
 	struct NarrowPhaseTestsComponent
 	{
-		// Groups of sentities to test,
-		// the static entities to be tested against the non static entities will be in the same index
-		std::vector<std::vector<Entity>> staticEntitiesToTest;
-		std::vector<std::vector<Entity>> nonStaticEntitiesToTest;
+		// Groups of entities to test,
+		// the enemy entities to be tested against and the ally entities will be in the same index
+		std::vector<std::vector<Entity>> allyEntitiesToTest;
+		std::vector<std::vector<Entity>> enemyEntitiesToTest;
 	};
 
 	// All collisions that happened in the last <FRAME_RATE> frames

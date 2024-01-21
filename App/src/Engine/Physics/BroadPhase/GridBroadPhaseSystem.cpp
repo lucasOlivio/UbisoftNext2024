@@ -8,15 +8,20 @@
 
 #include "Engine/Utils/GridUtils.h"
 #include "Engine/Utils/CollisionsUtils.h"
+#include "Engine/Utils/Vector2.h"
 
 namespace MyEngine
 {
+	const Vec2 BOX_LENGTH = Vec2(50.0f, 50.0f);
+
 	typedef std::set< Entity >::iterator itEntities;
 	typedef std::map< uint /*index*/, GridAABB* >::iterator itIdxAABB;
 	typedef std::pair< uint /*index*/, GridAABB* > pairIdxAABB;
 
 	void GridBroadPhaseSystem::Init()
 	{
+		GridBroadphaseComponent* pGrid = PhysicsLocator::GetGridBroadphase();
+		pGrid->lengthPerBox = BOX_LENGTH;
 	}
 
 	void GridBroadPhaseSystem::Start(Scene* pScene)
@@ -32,7 +37,8 @@ namespace MyEngine
 			uint idxpos = GridUtils::LocatePoint(pTransform->position, pGrid->lengthPerBox);
 			m_InsertEntity(entityId, idxpos, pRigidBody->bodyType);
 
-			m_InsertSphere(entityId, idxpos, pTransform, pRigidBody, pGrid);
+			m_InsertSphere(entityId, idxpos, pTransform->position, 
+						   pRigidBody->radius, pRigidBody->bodyType, pGrid);
 		}
 	}
 
@@ -47,28 +53,25 @@ namespace MyEngine
 			int key = it->first;
 			GridAABB* pAABB = it->second;
 
-			pAABB->vecNonStaticEntities.clear();
+			pAABB->vecEnemyEntities.clear();
+			pAABB->vecAllyEntities.clear();
 		}
 
 		// Clear all test groups
-		pNarrowTests->staticEntitiesToTest.clear();
-		pNarrowTests->nonStaticEntitiesToTest.clear();
+		pNarrowTests->enemyEntitiesToTest.clear();
+		pNarrowTests->allyEntitiesToTest.clear();
 
-		// Update aabbs non static entities positions
+		// Update aabbs entities positions
 		for (Entity entityId : SceneView<TransformComponent, RigidBodyComponent>(*pScene))
 		{
 			TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
 			RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
 
-			if (pRigidBody->bodyType == eBody::STATIC)
-			{
-				continue;
-			}
-
 			uint idxpos = GridUtils::LocatePoint(pTransform->position, pGrid->lengthPerBox);
 			m_InsertEntity(entityId, idxpos, pRigidBody->bodyType);
 
-			m_InsertSphere(entityId, idxpos, pTransform, pRigidBody, pGrid);
+			m_InsertSphere(entityId, idxpos, pTransform->position, 
+						   pRigidBody->radius, pRigidBody->bodyType, pGrid);
 		}
 
 		// Update testing groups for narrow phase
@@ -77,26 +80,26 @@ namespace MyEngine
 		{
 			GridAABB* pAABB = it->second;
 
-			// Only add to narrow phase testing groups if we have non static entity on aabb
-			if (pAABB->vecNonStaticEntities.size() > 0)
+			// Only add to narrow phase testing groups if we have ally entity on aabb
+			if (pAABB->vecAllyEntities.size() > 0)
 			{
 				std::vector<Entity> vecStatics = {};
 				std::vector<Entity> vecNonStatics = {};
 
-				pNarrowTests->staticEntitiesToTest.push_back(vecStatics);
-				pNarrowTests->nonStaticEntitiesToTest.push_back(vecNonStatics);
+				pNarrowTests->enemyEntitiesToTest.push_back(vecStatics);
+				pNarrowTests->allyEntitiesToTest.push_back(vecNonStatics);
 
 				i++;
-			}
 
-			for (Entity entityId : pAABB->vecNonStaticEntities)
-			{
-				pNarrowTests->nonStaticEntitiesToTest[i].push_back(entityId);
-			}
+				for (Entity entityId : pAABB->vecEnemyEntities)
+				{
+					pNarrowTests->allyEntitiesToTest[i].push_back(entityId);
+				}
 
-			for (Entity entityId : pAABB->vecStaticEntities)
-			{
-				pNarrowTests->staticEntitiesToTest[i].push_back(entityId);
+				for (Entity entityId : pAABB->vecEnemyEntities)
+				{
+					pNarrowTests->enemyEntitiesToTest[i].push_back(entityId);
+				}
 			}
 
 			// Check if aabb is empty to remove from mapping
@@ -167,20 +170,19 @@ namespace MyEngine
 	}
 
 	void GridBroadPhaseSystem::m_InsertSphere(Entity entityID, uint originIndex,
-											  TransformComponent* pTransform, 
-											  RigidBodyComponent* pRigidBody,
+											  Vec2 position, float radius, eBody bodyType,
 											  GridBroadphaseComponent* pGrid)
 	{
 		// Check collisions in the neighboring cells
 		for (int i = -1; i <= 1; ++i) 
 		{
-			float radiusI = pRigidBody->radius / i;
+			float radiusI = radius * i;
 			for (int j = -1; j <= 1; ++j) 
 			{
-				float radiusJ = pRigidBody->radius / j;
+				float radiusJ = radius * j;
 
 				Vec2 currRadius = Vec2(radiusI, radiusJ);
-				Vec2 currPoint = pTransform->position + currRadius;
+				Vec2 currPoint = position + currRadius;
 
 				uint currIdxpos = GridUtils::LocatePoint(currPoint, pGrid->lengthPerBox);
 
@@ -190,7 +192,7 @@ namespace MyEngine
 					continue;
 				}
 
-				m_InsertEntity(entityID, currIdxpos, pRigidBody->bodyType);
+				m_InsertEntity(entityID, currIdxpos, bodyType);
 			}
 		}
 	}
@@ -201,13 +203,13 @@ namespace MyEngine
 		GridBroadphaseComponent* pGrid = PhysicsLocator::GetGridBroadphase();
 		NarrowPhaseTestsComponent* pNarrowTests = PhysicsLocator::GetNarrowPhaseTests();
 
-		if (bodyType == eBody::STATIC)
+		if (bodyType == eBody::ENEMY)
 		{
-			pAABB->vecStaticEntities.insert(entityID);
+			pAABB->vecEnemyEntities.insert(entityID);
 		}
 		else
 		{
-			pAABB->vecNonStaticEntities.insert(entityID);
+			pAABB->vecAllyEntities.insert(entityID);
 		}
 
 		return;

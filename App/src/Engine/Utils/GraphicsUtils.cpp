@@ -51,4 +51,12 @@ namespace MyEngine
             pSprite->sprite->Draw();
         }
     }
+
+    void GraphicsUtils::DrawRectangle(const Vec2& min, const Vec2& max, const float color[3])
+    {
+        App::DrawLine(min.x, min.y, max.x, min.y, color[0], color[1], color[2]);
+        App::DrawLine(max.x, min.y, max.x, max.y, color[0], color[1], color[2]);
+        App::DrawLine(max.x, max.y, min.x, max.y, color[0], color[1], color[2]);
+        App::DrawLine(min.x, max.y, min.x, min.y, color[0], color[1], color[2]);
+    }
 }

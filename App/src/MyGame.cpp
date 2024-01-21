@@ -6,7 +6,6 @@
 #include <app.h>
 //------------------------------------------------------------------------
 #include "Engine/Core/Engine.h"
-#include "Engine/Debug/ConsoleSystem.h"
 #include "Engine/Core/FrameSystem.h"
 
 #include "Engine/ECS/Components.h"
@@ -15,6 +14,11 @@
 
 #include "Engine/Physics/MovementSystem.h"
 #include "Engine/Physics/RotationSystem.h"
+#include "Engine/Physics/BroadPhase/GridBroadPhaseSystem.h"
+#include "Engine/Physics/NarrowPhase/CollisionSystem.h"
+
+#include "Engine/Debug/ConsoleSystem.h"
+#include "Engine/Debug/DrawGridSystem.h"
 
 #include "Engine/Gameplay/PlayerControllerSystem.h"
 #include "Engine/Gameplay/ZombieSpawnSystem.h"
@@ -77,7 +81,7 @@ void Init()
 	PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(entityId);
 
 	RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(entityId);
-	pRigidBody->bodyType = eBody::DYNAMIC;
+	pRigidBody->bodyType = eBody::ALLY;
 	pRigidBody->radius = 25.0f;
 
 	// Create systems
@@ -90,9 +94,13 @@ void Init()
 	// Physics systems
 	MovementSystem* pMovementSystem = new MovementSystem();
 	RotationSystem* pRotationSystem = new RotationSystem();
+	GridBroadPhaseSystem* pGridBroadPhaseSystem = new GridBroadPhaseSystem();
+	CollisionSystem* pCollisionSystem = new CollisionSystem();
 
 	gEngine->AddSystem(pMovementSystem, pScene);
 	gEngine->AddSystem(pRotationSystem, pScene);
+	gEngine->AddSystem(pGridBroadPhaseSystem, pScene);
+	gEngine->AddSystem(pCollisionSystem, pScene);
 
 	// Gameplay systems
 	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
@@ -113,8 +121,10 @@ void Init()
 #ifdef _DEBUG
 	// Debug systems
 	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
+	DrawGridSystem* pDrawGridSystem = new DrawGridSystem();
 
 	gEngine->AddSystem(pConsoleSystem, pScene);
+	gEngine->AddSystem(pDrawGridSystem, pScene);
 #endif
 
 }

@@ -8,11 +8,21 @@
 
 namespace MyEngine
 {
+	/*
+	The idea of the body is been static or dynamic so we don't need to recalculate the grid for the static,
+	but since we have much more dynamics makes more sense to separate between things we should check (ALLIE) and things
+	that we only need to check against (ENEMY).
+
 	enum eBody
 	{
 		STATIC,
 		KINEMATIC,
 		DYNAMIC
+	};*/
+	enum eBody
+	{
+		ALLY,
+		ENEMY
 	};
 
 	struct sCollisionData

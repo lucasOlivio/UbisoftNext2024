@@ -29,6 +29,10 @@ namespace MyEngine
 		FollowTargetComponent* pFollowTarget = pScene->AddComponent<FollowTargetComponent>(zombieId);
 		pFollowTarget->entityToFollow = GetPlayerId(pScene);
 
+		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(zombieId);
+		pRigidBody->bodyType = eBody::ENEMY;
+		pRigidBody->radius = 25.0f;
+
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(zombieId);
 		pSprite->name = DEFAULT_SPRITE_PATH + ZOMBIE_SPRITE;
 		pSprite->cols = 1;
@@ -55,6 +59,10 @@ namespace MyEngine
 
 		ProjectileComponent* pProjectile = pScene->AddComponent<ProjectileComponent>(projectileId);
 		pProjectile->damage = damage;
+
+		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(projectileId);
+		pRigidBody->bodyType = eBody::ALLY;
+		pRigidBody->radius = 10.0f;
 
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(projectileId);
 		pSprite->name = DEFAULT_SPRITE_PATH + BULLET_SPRITE;

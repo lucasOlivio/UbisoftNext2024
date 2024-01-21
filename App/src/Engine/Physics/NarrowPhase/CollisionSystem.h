@@ -30,7 +30,7 @@ namespace MyEngine
 		// Sphere checks
 		void m_CheckSphereOverlaps(Scene* pScene,
 								   Entity entityIdA,
-								   TransformComponent* pTransformA,
+								   Vec2 positionA,
 								   float radiusA,
 								   const int index,
 								   const std::vector<Entity>& nonStaticEntities,
@@ -38,7 +38,7 @@ namespace MyEngine
 
 		bool m_CheckSphereEntityOverlap(Scene* pScene,
 										Entity entityIdA,
-										TransformComponent* pTransformA,
+								        Vec2 positionA,
 										float radiusA,
 										Entity entityIdB);
 	};

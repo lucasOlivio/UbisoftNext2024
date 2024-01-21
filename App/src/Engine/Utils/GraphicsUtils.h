@@ -16,5 +16,7 @@ namespace MyEngine
 		static void SetupSprite(SpriteComponent* pSprite, TransformComponent* pTransform);
 
 		static void DrawSprite(SpriteComponent* pSprite);
+
+		static void DrawRectangle(const Vec2& min, const Vec2& max, const float color[3]);
 	};
 }
