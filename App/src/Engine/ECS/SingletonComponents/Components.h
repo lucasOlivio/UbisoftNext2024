@@ -23,6 +23,8 @@ namespace MyEngine
 		float fps;
 	};
 
+	// Debug global components
+	// -------------------------
 	struct ConsoleComponent
 	{
 		struct Line

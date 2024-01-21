@@ -6,6 +6,7 @@
 #include "Engine/Events/EventBusLocator.hpp"
 
 #include "Engine/ECS/SingletonComponents/CoreLocator.h"
+#include "Engine/ECS/SingletonComponents/DebugLocator.h"
 #include "Engine/ECS/SingletonComponents/PhysicsLocator.h"
 #include "Engine/ECS/SingletonComponents/GameplayLocator.h"
 
@@ -90,6 +91,7 @@ namespace MyEngine
         CoreLocator::Clear();
         PhysicsLocator::Clear();
         GameplayLocator::Clear();
+        DebugLocator::Clear();
 
         // Delete event bus
         delete m_pEventBusCollision;

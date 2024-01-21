@@ -6,7 +6,7 @@
 #include <app.h>
 //------------------------------------------------------------------------
 #include "Engine/Core/Engine.h"
-#include "Engine/Core/ConsoleSystem.h"
+#include "Engine/Debug/ConsoleSystem.h"
 #include "Engine/Core/FrameSystem.h"
 
 #include "Engine/ECS/Components.h"
@@ -106,11 +106,17 @@ void Init()
 	gEngine->AddSystem(pProjectileSystem, pScene);
 
 	// Core systems
-	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
 	FrameSystem* pFrameSystem = new FrameSystem();
 
-	gEngine->AddSystem(pConsoleSystem, pScene);
 	gEngine->AddSystem(pFrameSystem, pScene);
+
+#ifdef _DEBUG
+	// Debug systems
+	ConsoleSystem* pConsoleSystem = new ConsoleSystem();
+
+	gEngine->AddSystem(pConsoleSystem, pScene);
+#endif
+
 }
 
 //------------------------------------------------------------------------

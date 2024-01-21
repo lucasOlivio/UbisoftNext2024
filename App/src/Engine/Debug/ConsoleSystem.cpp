@@ -4,7 +4,7 @@
 
 #include "Engine/ECS/SceneView.hpp"
 #include "Engine/ECS/Components.h"
-#include "Engine/ECS/SingletonComponents/CoreLocator.h"
+#include "Engine/ECS/SingletonComponents/DebugLocator.h"
 
 #include <app.h>
 
@@ -25,7 +25,7 @@ namespace MyEngine
     void ConsoleSystem::Render(Scene* pScene)
     {
         const float LINE_SPACING = 30.0f;
-        ConsoleComponent* pConsole = CoreLocator::GetConsole();
+        ConsoleComponent* pConsole = DebugLocator::GetConsole();
 
         std::queue< ConsoleComponent::Line> lines = pConsole->lines;
 

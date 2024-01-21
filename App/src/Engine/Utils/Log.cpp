@@ -2,14 +2,14 @@
 
 #include "Log.h"
 
-#include "Engine/ECS/SingletonComponents/CoreLocator.h"
+#include "Engine/ECS/SingletonComponents/DebugLocator.h"
 
 namespace MyEngine
 {
     void Log::Print(LogLevel level, const std::string& message)
     {
         const int MAX_CONSOLE_LINES = 10;
-        ConsoleComponent* pConsole = CoreLocator::GetConsole();
+        ConsoleComponent* pConsole = DebugLocator::GetConsole();
 
         std::string flag = "";
         float color[] = { 1.0f, 1.0f, 1.0f };
