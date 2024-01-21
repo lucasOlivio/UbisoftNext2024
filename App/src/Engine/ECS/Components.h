@@ -68,6 +68,12 @@ namespace MyEngine
 		CSimpleSprite* sprite;
 	};
 
+	struct SoundComponent
+	{
+		std::string name;
+
+	};
+
 	struct RigidBodyComponent
 	{
 		eBody bodyType;
