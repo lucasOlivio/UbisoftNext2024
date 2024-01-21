@@ -10,7 +10,7 @@
 
 #include "Engine/ECS/Components.h"
 
-#include "Engine/Utils/Random.h"
+#include "Engine/Utils/GameplayUtils.h"
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -25,51 +25,12 @@ void Init()
 	// Initialize engine
 	pEngine->Init();
 
-	// Setup scene
+	// Setup initial scene
 	Scene* pScene = pEngine->GetScene();
 
-	// Background
-	Entity entityIdbackground = pScene->CreateEntity();
-	TransformComponent* pTransformBackground = pScene->AddComponent<TransformComponent>(entityIdbackground);
-	pTransformBackground->position = Vec2(512, 385);
-	pTransformBackground->angle = 0;
-	pTransformBackground->scale = 1;
+	GameplayUtils::CreateBackground(pScene, Vec2(512, 385));
 
-	SpriteComponent* pSpriteBackground = pScene->AddComponent<SpriteComponent>(entityIdbackground);
-	pSpriteBackground->name = DEFAULT_SPRITE_PATH + "background.jpg";
-	pSpriteBackground->cols = 1;
-	pSpriteBackground->rows = 1;
-	pSpriteBackground->speed = 1.0f;
-
-	// Player
-	Entity entityId = pScene->CreateEntity();
-	TagComponent* pTag = pScene->AddComponent<TagComponent>(entityId);
-	pTag->name = "Player";
-
-	TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(entityId);
-	pTransform->position = Vec2(512, 394);
-	pTransform->angle = 0.0f;
-	pTransform->scale = 1;
-
-	SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(entityId);
-	pSprite->name = DEFAULT_SPRITE_PATH + "player.png";
-	pSprite->cols = 1;
-	pSprite->rows = 1;
-	pSprite->speed = 1.0f;
-
-	RotationComponent* pRotation = pScene->AddComponent<RotationComponent>(entityId);
-	pRotation->acceleration = 0.0f;
-	pRotation->velocity = 0.0f;
-
-	MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(entityId);
-	pMovement->acceleration = Vec2(0.0f, 0.0f);
-	pMovement->velocity = Vec2(0.0f, 0.0f);
-
-	PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(entityId);
-
-	RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(entityId);
-	pRigidBody->bodyType = eBody::ACTIVE;
-	pRigidBody->radius = 25.0f;
+	GameplayUtils::CreatePlayer(pScene, Vec2(512, 394));
 
 	// Create base systems
 

@@ -8,9 +8,12 @@
 #include "Engine/Utils/GraphicsUtils.h"
 #include "Engine/Utils/TransformUtils.h"
 
+const std::string BACKGROUND_SPRITE = "background.jpg";
+const std::string PLAYER_SPRITE = "player.png";
 const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
 
+const float PLAYER_RADIUS = 25.0f;
 const float ZOMBIE_RADIUS = 25.0f;
 const float BULLET_RADIUS = 10.0f;
 
@@ -19,7 +22,59 @@ const int ZOMBIE_DAMAGE = 1;
 
 namespace MyEngine
 {
-    Entity GameplayUtils::CreateZombie(Scene* pScene, Vec2 position, float speed)
+	Entity GameplayUtils::CreateBackground(Scene* pScene, Vec2 position)
+	{
+		Entity backgroundId = pScene->CreateEntity();
+		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(backgroundId);
+		pTransform->position = position;
+		pTransform->angle = 0;
+		pTransform->scale = 1;
+
+		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(backgroundId);
+		pSprite->name = DEFAULT_SPRITE_PATH + BACKGROUND_SPRITE;
+		pSprite->cols = 1;
+		pSprite->rows = 1;
+		pSprite->speed = 1.0f;
+
+		return backgroundId;
+	}
+
+	Entity GameplayUtils::CreatePlayer(Scene* pScene, Vec2 position)
+	{
+		// Player
+		Entity playerId = pScene->CreateEntity();
+		TagComponent* pTag = pScene->AddComponent<TagComponent>(playerId);
+		pTag->name = "Player";
+
+		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(playerId);
+		pTransform->position = position;
+		pTransform->angle = 0.0f;
+		pTransform->scale = 1;
+
+		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(playerId);
+		pSprite->name = DEFAULT_SPRITE_PATH + PLAYER_SPRITE;
+		pSprite->cols = 1;
+		pSprite->rows = 1;
+		pSprite->speed = 1.0f;
+
+		RotationComponent* pRotation = pScene->AddComponent<RotationComponent>(playerId);
+		pRotation->acceleration = 0.0f;
+		pRotation->velocity = 0.0f;
+
+		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(playerId);
+		pMovement->acceleration = Vec2(0.0f, 0.0f);
+		pMovement->velocity = Vec2(0.0f, 0.0f);
+
+		PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(playerId);
+
+		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(playerId);
+		pRigidBody->bodyType = eBody::ACTIVE;
+		pRigidBody->radius = PLAYER_RADIUS;
+
+		return playerId;
+	}
+
+	Entity GameplayUtils::CreateZombie(Scene* pScene, Vec2 position, float speed)
     {
 		Entity zombieId = pScene->CreateEntity();
 		TagComponent* pTag = pScene->AddComponent<TagComponent>(zombieId);

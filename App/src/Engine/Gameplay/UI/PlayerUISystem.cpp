@@ -40,8 +40,6 @@ namespace MyEngine
         Entity playerId = GameplayUtils::GetPlayerId(pScene);
         PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(playerId);
 
-        GraphicsUtils::DrawRectangle(START_RECT_UI, END_RECT_UI, CYAN);
-
         GraphicsUtils::PrintBarWidget("Health", pPlayer->health, HEALTH_X, HEALTH_Y, GREEN);
         GraphicsUtils::PrintBarWidget("Ammo  ", pPlayer->currentAmmo, AMMO_X, AMMO_Y, RED);
 
