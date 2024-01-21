@@ -45,7 +45,7 @@ namespace MyEngine
         GraphicsUtils::PrintBarWidget("Health", pPlayer->health, HEALTH_X, HEALTH_Y, GREEN);
         GraphicsUtils::PrintBarWidget("Ammo  ", pPlayer->currentAmmo, AMMO_X, AMMO_Y, RED);
 
-        std::string scoreText = "Score " + std::to_string(pPlayer->score);
+        std::string scoreText = "Score     " + std::to_string(pPlayer->score);
         App::Print(SCORE_X, SCORE_Y, scoreText.c_str(), BLUE[0], BLUE[1], BLUE[2]);
     }
 
