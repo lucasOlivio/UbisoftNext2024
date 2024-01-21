@@ -75,4 +75,9 @@ namespace MyEngine
 	{
 		Entity entityToFollow;
 	};
+
+	struct ProjectileComponent
+	{
+		int damage;
+	};
 }

@@ -86,7 +86,9 @@ namespace MyEngine
                                                                          componentId);
 
             if (!hasComponent)
+            {
                 return nullptr;
+            }
 
             T* pComponent = static_cast<T*>(m_componentPools[componentType]->Get(componentId));
             return pComponent;

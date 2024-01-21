@@ -21,6 +21,14 @@ namespace MyEngine
 		pTransform->angle = 0;
 		pTransform->scale = 1;
 
+		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(zombieId);
+		pMovement->acceleration = Vec2(0.0f, 0.0f);
+		pMovement->velocity = FORWARD_VECTOR * speed;
+		pMovement->maxSpeed = speed;
+
+		FollowTargetComponent* pFollowTarget = pScene->AddComponent<FollowTargetComponent>(zombieId);
+		pFollowTarget->entityToFollow = GetPlayerId(pScene);
+
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(zombieId);
 		pSprite->name = DEFAULT_SPRITE_PATH + ZOMBIE_SPRITE;
 		pSprite->cols = 1;
@@ -29,24 +37,24 @@ namespace MyEngine
 
 		GraphicsUtils::SetupSprite(pSprite, pTransform);
 
-		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(zombieId);
-		pMovement->acceleration = Vec2(0.0f, 0.0f);
-		pMovement->velocity = FORWARD_VECTOR * speed;
-		pMovement->maxSpeed = speed; // To avoid movement system to keep reseting velocity
-
-		FollowTargetComponent* pFollowTarget = pScene->AddComponent<FollowTargetComponent>(zombieId);
-		pFollowTarget->entityToFollow = GetPlayerId(pScene);
-
         return zombieId;
     }
 
-	Entity GameplayUtils::CreateProjectile(Scene* pScene, Vec2 position, Vec2 direction, float speed)
+	Entity GameplayUtils::CreateProjectile(Scene* pScene, Vec2 position, Vec2 direction, float speed, int damage)
 	{
 		Entity projectileId = pScene->CreateEntity();
 		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(projectileId);
 		pTransform->position = position;
 		pTransform->angle = FORWARD_VECTOR.Angle(direction);
 		pTransform->scale = 1;
+
+		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(projectileId);
+		pMovement->acceleration = Vec2(0.0f, 0.0f);
+		pMovement->velocity = direction * speed;
+		pMovement->maxSpeed = speed;
+
+		ProjectileComponent* pProjectile = pScene->AddComponent<ProjectileComponent>(projectileId);
+		pProjectile->damage = damage;
 
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(projectileId);
 		pSprite->name = DEFAULT_SPRITE_PATH + BULLET_SPRITE;
@@ -55,11 +63,6 @@ namespace MyEngine
 		pSprite->speed = 1.0f;
 
 		GraphicsUtils::SetupSprite(pSprite, pTransform);
-
-		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(projectileId);
-		pMovement->acceleration = Vec2(0.0f, 0.0f);
-		pMovement->velocity = direction * speed;
-		pMovement->maxSpeed = speed; // To avoid movement system to keep reseting velocity
 
 		return projectileId;
 	}

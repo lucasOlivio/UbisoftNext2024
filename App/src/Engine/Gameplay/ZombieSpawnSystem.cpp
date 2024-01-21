@@ -9,6 +9,11 @@
 #include "Engine/Utils/GameplayUtils.h"
 #include "Engine/Utils/Random.h"
 
+const float ZOMBIE_SPAWN_DISTANCE = 650.0f;
+const float ZOMBIE_SPAWN_RATE = 0.01f;
+const float ZOMBIE_INITIAL_SPEED = 100.0f;
+const int MAX_ZOMBIES = 1000;
+
 namespace MyEngine
 {
     void ZombieSpawnSystem::Init()
@@ -18,12 +23,12 @@ namespace MyEngine
     void ZombieSpawnSystem::Start(Scene* pScene)
     {
         ZombieSpawnComponent* pZSpawn = GameplayLocator::GetZombieSpawn();
-        pZSpawn->spawnRate = 0.01f;
+        pZSpawn->spawnRate = ZOMBIE_SPAWN_RATE;
         pZSpawn->lastSpawn = 0.0f;
         pZSpawn->totalZombies = 0;
-        pZSpawn->maxZombies = 1000;
-        pZSpawn->spawnDistance = 650.0f;
-        pZSpawn->initialZombieSpeed = 100.0f;
+        pZSpawn->maxZombies = MAX_ZOMBIES;
+        pZSpawn->spawnDistance = ZOMBIE_SPAWN_DISTANCE;
+        pZSpawn->initialZombieSpeed = ZOMBIE_INITIAL_SPEED;
     }
 
     void ZombieSpawnSystem::Update(Scene* pScene, float deltaTime)

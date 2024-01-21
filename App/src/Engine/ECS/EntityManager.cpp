@@ -17,6 +17,7 @@ namespace MyEngine
     {
         if (m_availableEntities.empty())
         {
+            LOG_ERROR("Max entities reached. Unable to add more entities.");
             return -1;
         }
 
@@ -33,6 +34,7 @@ namespace MyEngine
     {
         if (entityId < 0 || entityId >= MAX_ENTITIES)
         {
+            LOG_ERROR("Invalid entity ID for removal.");
             return;
         }
 
@@ -48,6 +50,7 @@ namespace MyEngine
     {
         if (entityId < 0 || entityId >= MAX_ENTITIES)
         {
+            LOG_ERROR("Invalid entity ID for setting component.");
             return;
         }
 
@@ -58,6 +61,7 @@ namespace MyEngine
     {
         if (entityId < 0 || entityId >= MAX_ENTITIES)
         {
+            LOG_ERROR("Invalid entity ID for setting mask.");
             return;
         }
 
@@ -68,6 +72,7 @@ namespace MyEngine
     {
         if (entityId < 0 || entityId >= MAX_ENTITIES)
         {
+            LOG_ERROR("Invalid entity ID for getting mask.");
             return EntityMask();
         }
 

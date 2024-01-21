@@ -22,6 +22,7 @@ namespace MyEngine
     {
         if (componentId >= m_size)
         {
+            LOG_ERROR("Invalid componentId to get from pool.");
             return nullptr;
         }
 
@@ -41,7 +42,7 @@ namespace MyEngine
 
         if (m_size < 1 || componentId == m_size)
         {
-            // No more active components
+            // No more active components or removed from end of list
             return;
         }
 

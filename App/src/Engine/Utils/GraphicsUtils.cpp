@@ -2,7 +2,7 @@
 
 #include "GraphicsUtils.h"
 
-#include "Engine/Graphics/SpriteManager/SpriteManagerLocator.h"
+#include <app.h>
 
 namespace MyEngine
 {
@@ -46,6 +46,9 @@ namespace MyEngine
 
     void GraphicsUtils::DrawSprite(SpriteComponent* pSprite)
     {
-        pSprite->sprite->Draw();
+        if (pSprite->sprite)
+        {
+            pSprite->sprite->Draw();
+        }
     }
 }

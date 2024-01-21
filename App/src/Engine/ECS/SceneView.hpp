@@ -76,8 +76,9 @@ namespace MyEngine
         {
             const std::vector<Entity>& entities = m_pEntityManager->GetEntities();
 
+            // Index 0 is invalid entity
+            size_t firstIndex = 0;
             // Find first entity with correct mask
-            int firstIndex = 0;
             while (firstIndex != entities.size() &&
                    !(m_all || m_pEntityManager->HasComponents(entities[firstIndex], m_mask)))
             {

@@ -2,8 +2,6 @@
 
 #include "Engine/Core/iSystem.h"
 
-#include "Engine/Graphics/SpriteManager/iSpriteManager.h"
-
 #include "Engine/ECS/Scene.h"
 
 #include "Engine/Events/CollisionEvent.h"
@@ -47,8 +45,5 @@ namespace MyEngine
 
 		// Events
 		iEventBus<eCollisionEvents, CollisionEnterEvent>* m_pEventBusCollision;
-
-		// Resources
-		iSpriteManager* m_pSpriteManager;
 	};
 }

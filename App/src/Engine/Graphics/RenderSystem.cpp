@@ -2,8 +2,6 @@
 
 #include "RenderSystem.h"
 
-#include "Engine/Graphics/SpriteManager/SpriteManagerLocator.h"
-
 #include "Engine/ECS/SceneView.hpp"
 
 #include "Engine/Utils/GraphicsUtils.h"

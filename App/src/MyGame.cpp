@@ -19,6 +19,7 @@
 #include "Engine/Gameplay/PlayerControllerSystem.h"
 #include "Engine/Gameplay/ZombieSpawnSystem.h"
 #include "Engine/Gameplay/FollowTargetSystem.h"
+#include "Engine/Gameplay/ProjectileSystem.h"
 
 #include "Engine/Utils/Random.h"
 
@@ -97,10 +98,12 @@ void Init()
 	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
 	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
 	FollowTargetSystem* pFollowTargetSystem = new FollowTargetSystem();
+	ProjectileSystem* pProjectileSystem = new ProjectileSystem();
 
 	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pZombieSpawnSystem, pScene);
 	gEngine->AddSystem(pFollowTargetSystem, pScene);
+	gEngine->AddSystem(pProjectileSystem, pScene);
 
 	// Core systems
 	ConsoleSystem* pConsoleSystem = new ConsoleSystem();

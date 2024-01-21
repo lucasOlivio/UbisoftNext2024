@@ -14,6 +14,7 @@
 
 const int PLAYER_MAX_HEALTH = 100;
 const float PLAYER_FIRERATE = 0.2f; // Shots per second
+const int PLAYER_TOTAL_BULLETS = 100;
 
 const float PLAYER_ACCELERATION = 100.0f;
 const float PLAYER_DRAG = 5.0f;
@@ -26,6 +27,7 @@ const float PLAYER_MAX_ROTATION_SPEED = 3.0f;
 const float PLAYER_MAX_ROTATION_ACCELERATION = 15.0f;
 
 const float BULLET_SPEED = 600.0f;
+const int BULLET_DAMAGE = 10;
 
 namespace MyEngine
 {
@@ -57,6 +59,8 @@ namespace MyEngine
             pPlayer->health = PLAYER_MAX_HEALTH;
             pPlayer->fireRate = PLAYER_FIRERATE;
             pPlayer->lastFire = PLAYER_FIRERATE;
+            pPlayer->currentAmmo = PLAYER_TOTAL_BULLETS;
+            pPlayer->totalAmmo = PLAYER_TOTAL_BULLETS;
         }
 
         return;
@@ -93,7 +97,7 @@ namespace MyEngine
             if (App::IsKeyPressed(eKeyCodes::SPACE))
                 m_Shoot(pScene, pTransform, pRigidBody, pPlayer);
 
-            m_ClipPlayerToWindow(pTransform, pRigidBody);
+            TransformUtils::ClipToWindow(pTransform->position.x, pTransform->position.y);;
             pPlayer->lastFire += deltaTime;
         }
     }
@@ -135,31 +139,10 @@ namespace MyEngine
         }
     }
 
-    void PlayerControllerSystem::m_ClipPlayerToWindow(TransformComponent* pTransform, RigidBodyComponent* pRigidBody)
-    {
-        if (pTransform->position.x + pRigidBody->radius > APP_VIRTUAL_WIDTH)
-        {
-            pTransform->position.x = APP_VIRTUAL_WIDTH - pRigidBody->radius;
-        }
-        else if (pTransform->position.x - pRigidBody->radius < 0.0f)
-        {
-            pTransform->position.x = pRigidBody->radius;
-        }
-
-        if (pTransform->position.y + pRigidBody->radius > APP_VIRTUAL_HEIGHT)
-        {
-            pTransform->position.y = APP_VIRTUAL_HEIGHT - pRigidBody->radius;
-        }
-        else if (pTransform->position.y - pRigidBody->radius < 0.0f)
-        {
-            pTransform->position.y = pRigidBody->radius;
-        }
-    }
-
     void PlayerControllerSystem::m_Shoot(Scene* pScene, TransformComponent* pTransform, 
                                          RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer)
     {
-        if (pPlayer->lastFire < pPlayer->fireRate)
+        if (pPlayer->lastFire < pPlayer->fireRate || pPlayer->currentAmmo == 0)
         {
             return;
         }
@@ -169,8 +152,9 @@ namespace MyEngine
         // Create projectile in front of player
         GameplayUtils::CreateProjectile(pScene, 
                                         pTransform->position + (playerDirection * pRigidBody->radius), 
-                                        playerDirection, BULLET_SPEED);
+                                        playerDirection, BULLET_SPEED, BULLET_DAMAGE);
 
         pPlayer->lastFire = 0.0f;
+        pPlayer->currentAmmo--;
     }
 }

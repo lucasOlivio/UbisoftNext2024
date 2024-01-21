@@ -112,7 +112,12 @@ namespace MyEngine
 
                 // Get entity id that had component moved
                 Entity entityIdMoved;
-                pComponentMap->GetByValue(componentIdOld, entityIdMoved);
+                bool isEntity = pComponentMap->GetByValue(componentIdOld, entityIdMoved);
+                if (!isEntity)
+                {
+                    // No component moved
+                    continue;
+                }
 
                 // Update the relation for the moved component
                 pComponentMap->Update(entityIdMoved, componentId);
