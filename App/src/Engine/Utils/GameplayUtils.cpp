@@ -16,6 +16,9 @@ namespace MyEngine
     Entity GameplayUtils::CreateZombie(Scene* pScene, Vec2 position, float speed)
     {
 		Entity zombieId = pScene->CreateEntity();
+		TagComponent* pTag = pScene->AddComponent<TagComponent>(zombieId);
+		pTag->name = "Zombie";
+
 		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(zombieId);
 		pTransform->position = position;
 		pTransform->angle = 0;
@@ -47,6 +50,9 @@ namespace MyEngine
 	Entity GameplayUtils::CreateProjectile(Scene* pScene, Vec2 position, Vec2 direction, float speed, int damage)
 	{
 		Entity projectileId = pScene->CreateEntity();
+		TagComponent* pTag = pScene->AddComponent<TagComponent>(projectileId);
+		pTag->name = "Projectile";
+
 		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(projectileId);
 		pTransform->position = position;
 		pTransform->angle = FORWARD_VECTOR.Angle(direction);

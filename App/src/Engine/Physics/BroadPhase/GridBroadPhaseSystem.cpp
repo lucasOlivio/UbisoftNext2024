@@ -47,7 +47,7 @@ namespace MyEngine
 		GridBroadphaseComponent* pGrid = PhysicsLocator::GetGridBroadphase();
 		NarrowPhaseTestsComponent* pNarrowTests = PhysicsLocator::GetNarrowPhaseTests();
 
-		// Clear non static entities first
+		// Clear all aabbs first
 		for (itIdxAABB it = pGrid->mapAABBs.begin(); it != pGrid->mapAABBs.end(); ++it)
 		{
 			int key = it->first;
@@ -83,15 +83,15 @@ namespace MyEngine
 			// Only add to narrow phase testing groups if we have ally entity on aabb
 			if (pAABB->vecAllyEntities.size() > 0)
 			{
-				std::vector<Entity> vecStatics = {};
-				std::vector<Entity> vecNonStatics = {};
+				std::vector<Entity> vecEnemies = {};
+				std::vector<Entity> vecAlly = {};
 
-				pNarrowTests->enemyEntitiesToTest.push_back(vecStatics);
-				pNarrowTests->allyEntitiesToTest.push_back(vecNonStatics);
+				pNarrowTests->enemyEntitiesToTest.push_back(vecEnemies);
+				pNarrowTests->allyEntitiesToTest.push_back(vecAlly);
 
 				i++;
 
-				for (Entity entityId : pAABB->vecEnemyEntities)
+				for (Entity entityId : pAABB->vecAllyEntities)
 				{
 					pNarrowTests->allyEntitiesToTest[i].push_back(entityId);
 				}
@@ -179,6 +179,12 @@ namespace MyEngine
 			float radiusI = radius * i;
 			for (int j = -1; j <= 1; ++j) 
 			{
+				if (j == 0 && i == 0)
+				{
+					// Same aabb
+					continue;
+				}
+
 				float radiusJ = radius * j;
 
 				Vec2 currRadius = Vec2(radiusI, radiusJ);
@@ -200,8 +206,6 @@ namespace MyEngine
 	void GridBroadPhaseSystem::m_InsertEntity(Entity entityID, uint index, eBody bodyType)
 	{
 		GridAABB* pAABB = m_GetOrCreateAABB(index);
-		GridBroadphaseComponent* pGrid = PhysicsLocator::GetGridBroadphase();
-		NarrowPhaseTestsComponent* pNarrowTests = PhysicsLocator::GetNarrowPhaseTests();
 
 		if (bodyType == eBody::ENEMY)
 		{

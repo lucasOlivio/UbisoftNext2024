@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/ECS/Base.h"
+#include "Engine/ECS/Scene.h"
 
 #include "Engine/Utils/Vector2.h"
 
@@ -27,6 +28,7 @@ namespace MyEngine
 
 	struct sCollisionData
 	{
+		Scene* pScene;
 		Entity entityA;
 		Entity entityB;
 		Vec2 contactPoint;

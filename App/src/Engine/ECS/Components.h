@@ -11,6 +11,11 @@ class CSimpleSprite;
 
 namespace MyEngine
 {
+	struct TagComponent
+	{
+		std::string name;
+	};
+
 	struct TransformComponent
 	{
 		Vec2 position;

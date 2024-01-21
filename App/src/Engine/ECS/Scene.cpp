@@ -125,6 +125,8 @@ namespace MyEngine
 
             // Remove entity from entity manager list
             m_pEntityManager->RemoveEntity(entityId);
+
+            m_entitiesToDestroy.clear();
         }
     }
 

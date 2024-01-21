@@ -75,9 +75,10 @@ namespace MyEngine
                                                 const std::vector<Entity>& allyEntities,
                                                 const std::vector<Entity>& enemyEntities)
     {
+        // Check entity A against all enemies
         for (int j = 0; j < enemyEntities.size(); j++)
         {
-            Entity entityIdB = allyEntities[j];
+            Entity entityIdB = enemyEntities[j];
             bool isCollision = m_CheckSphereEntityOverlap(pScene, entityIdA,
                                                           positionA,
                                                           radiusA, 
@@ -110,6 +111,7 @@ namespace MyEngine
         }
 
         sCollisionData collData = sCollisionData();
+        collData.pScene = pScene;
         collData.entityA = entityIdA;
         collData.entityB = entityIdB;
         collData.collisionNormalA = CollisionsUtils::SphereSphere_Normal(positionA,

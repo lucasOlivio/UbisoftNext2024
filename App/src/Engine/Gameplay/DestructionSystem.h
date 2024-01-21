@@ -4,14 +4,16 @@
 
 #include "Engine/ECS/Components.h"
 
+#include "Engine/Events/CollisionEvent.h"
+
 namespace MyEngine
 {
-	// Handles projectiles destruction
-	class ProjectileSystem : public iSystem
+	// Handles destruction of all objects that collide or bullets that get out of window
+	class DestructionSystem : public iSystem
 	{
 	public:
-		ProjectileSystem() = default;
-		virtual ~ProjectileSystem() { };
+		DestructionSystem() = default;
+		virtual ~DestructionSystem() { };
 
 		virtual void Init();
 
@@ -24,5 +26,7 @@ namespace MyEngine
 		virtual void End(Scene* pScene);
 
 		virtual void Shutdown();
+
+		static void OnCollision(const CollisionEnterEvent& event);
 	};
 }

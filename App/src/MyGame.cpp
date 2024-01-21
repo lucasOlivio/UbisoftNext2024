@@ -23,7 +23,7 @@
 #include "Engine/Gameplay/PlayerControllerSystem.h"
 #include "Engine/Gameplay/ZombieSpawnSystem.h"
 #include "Engine/Gameplay/FollowTargetSystem.h"
-#include "Engine/Gameplay/ProjectileSystem.h"
+#include "Engine/Gameplay/DestructionSystem.h"
 
 #include "Engine/Utils/Random.h"
 
@@ -59,6 +59,9 @@ void Init()
 
 	// Player
 	Entity entityId = pScene->CreateEntity();
+	TagComponent* pTag = pScene->AddComponent<TagComponent>(entityId);
+	pTag->name = "Player";
+
 	TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(entityId);
 	pTransform->position = Vec2(512, 394);
 	pTransform->angle = 0.0f;
@@ -106,12 +109,12 @@ void Init()
 	PlayerControllerSystem* pPlayerControllerSystem = new PlayerControllerSystem();
 	ZombieSpawnSystem* pZombieSpawnSystem = new ZombieSpawnSystem();
 	FollowTargetSystem* pFollowTargetSystem = new FollowTargetSystem();
-	ProjectileSystem* pProjectileSystem = new ProjectileSystem();
+	DestructionSystem* pDestructionSystem = new DestructionSystem();
 
 	gEngine->AddSystem(pPlayerControllerSystem, pScene);
 	gEngine->AddSystem(pZombieSpawnSystem, pScene);
 	gEngine->AddSystem(pFollowTargetSystem, pScene);
-	gEngine->AddSystem(pProjectileSystem, pScene);
+	gEngine->AddSystem(pDestructionSystem, pScene);
 
 	// Core systems
 	FrameSystem* pFrameSystem = new FrameSystem();
