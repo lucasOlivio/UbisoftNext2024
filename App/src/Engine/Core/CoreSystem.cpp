@@ -19,6 +19,7 @@ namespace MyEngine
         "CollisionSystem",
         // Gameplay systems
         "PlayerControllerSystem",
+        "TruckControllerSystem",
         "ZombieSpawnSystem",
         "FollowTargetSystem",
         "DestructionSystem",

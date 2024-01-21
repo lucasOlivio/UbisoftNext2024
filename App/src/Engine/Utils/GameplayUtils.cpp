@@ -9,7 +9,8 @@
 #include "Engine/Utils/TransformUtils.h"
 
 const std::string BACKGROUND_SPRITE = "background.jpg";
-const std::string PLAYER_SPRITE = "player.png";
+const std::string PLAYER_SPRITE = "player_chaingun.png";
+const std::string TRUCK_SPRITE = "Mini_truck.png";
 const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
 
@@ -41,13 +42,40 @@ namespace MyEngine
 
 	Entity GameplayUtils::CreatePlayer(Scene* pScene, Vec2 position)
 	{
+		// Truck
+		Entity truckId = pScene->CreateEntity();
+		TagComponent* pTagTruck = pScene->AddComponent<TagComponent>(truckId);
+		pTagTruck->name = "Truck";
+
+		TransformComponent* pTransformTruck = pScene->AddComponent<TransformComponent>(truckId);
+		pTransformTruck->position = position;
+		pTransformTruck->angle = 0.0f;
+		pTransformTruck->scale = 1;
+
+		SpriteComponent* pSpriteTruck = pScene->AddComponent<SpriteComponent>(truckId);
+		pSpriteTruck->name = DEFAULT_SPRITE_PATH + TRUCK_SPRITE;
+		pSpriteTruck->cols = 1;
+		pSpriteTruck->rows = 1;
+		pSpriteTruck->speed = 1.0f;
+
+		RotationComponent* pRotationTruck = pScene->AddComponent<RotationComponent>(truckId);
+		pRotationTruck->acceleration = 0.0f;
+		pRotationTruck->velocity = 0.0f;
+
+		MovementComponent* pMovementTruck = pScene->AddComponent<MovementComponent>(truckId);
+		pMovementTruck->acceleration = Vec2(0.0f, 0.0f);
+		pMovementTruck->velocity = Vec2(0.0f, 0.0f);
+
 		// Player
 		Entity playerId = pScene->CreateEntity();
 		TagComponent* pTag = pScene->AddComponent<TagComponent>(playerId);
 		pTag->name = "Player";
 
+		ParentComponent* pParent = pScene->AddComponent<ParentComponent>(playerId);
+		pParent->parentId = truckId;
+
 		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(playerId);
-		pTransform->position = position;
+		pTransform->position = Vec2(0.0f, 0.0f);
 		pTransform->angle = 0.0f;
 		pTransform->scale = 1;
 
@@ -56,14 +84,6 @@ namespace MyEngine
 		pSprite->cols = 1;
 		pSprite->rows = 1;
 		pSprite->speed = 1.0f;
-
-		RotationComponent* pRotation = pScene->AddComponent<RotationComponent>(playerId);
-		pRotation->acceleration = 0.0f;
-		pRotation->velocity = 0.0f;
-
-		MovementComponent* pMovement = pScene->AddComponent<MovementComponent>(playerId);
-		pMovement->acceleration = Vec2(0.0f, 0.0f);
-		pMovement->velocity = Vec2(0.0f, 0.0f);
 
 		PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(playerId);
 

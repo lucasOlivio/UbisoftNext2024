@@ -33,7 +33,7 @@ namespace MyEngine
                 continue;
             }
 
-            Vec2 direction = pTransformTarget->position - pTransform->position;
+            Vec2 direction = pTransformTarget->worldPosition - pTransform->worldPosition;
             Vec2 directionNormal = direction.Normalize();
 
             // Update facing direction

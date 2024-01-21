@@ -8,9 +8,9 @@ namespace MyEngine
 {
     void GraphicsUtils::UpdateAnimation(SpriteComponent* pSprite, TransformComponent* pTransform, const float& deltaTime)
     {
-        pSprite->sprite->SetPosition(pTransform->position.x, pTransform->position.y);
-        pSprite->sprite->SetAngle(pTransform->angle);
-        pSprite->sprite->SetScale(pTransform->scale);
+        pSprite->sprite->SetPosition(pTransform->worldPosition.x, pTransform->worldPosition.y);
+        pSprite->sprite->SetAngle(pTransform->worldAngle);
+        pSprite->sprite->SetScale(pTransform->worldScale);
 
         pSprite->sprite->Update(deltaTime);
     }

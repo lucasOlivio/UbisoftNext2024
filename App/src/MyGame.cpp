@@ -38,6 +38,7 @@ void Init()
 	pEngine->AddSystem(SystemFactory::CreateSystem("CoreSystem"), pScene);
 	pEngine->AddSystem(SystemFactory::CreateSystem("StateSystem"), pScene);
 	pEngine->AddSystem(SystemFactory::CreateSystem("FrameSystem"), pScene);
+	pEngine->AddSystem(SystemFactory::CreateSystem("ParentSystem"), pScene);
 
 	// Graphics systems
 	pEngine->AddSystem(SystemFactory::CreateSystem("RenderSystem"), pScene);

@@ -18,9 +18,20 @@ namespace MyEngine
 
 	struct TransformComponent
 	{
+		// Write only fields
 		Vec2 position;
 		float angle;
 		float scale;
+
+		// Read only fields, parent system keeps updated
+		Vec2 worldPosition;
+		float worldAngle;
+		float worldScale;
+	};
+
+	struct ParentComponent
+	{
+		Entity parentId;
 	};
 
 	struct MovementComponent

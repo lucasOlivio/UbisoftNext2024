@@ -28,12 +28,6 @@ namespace MyEngine
 		virtual void Shutdown();
 
 	private:
-		// direction: 1 forward, -1 backwards
-		void m_Accelerate(TransformComponent* pTransform, MovementComponent* pMovement, int direction);
-
-		// direction: 1 left, -1 right
-		void m_Rotate(TransformComponent* pTransform, RotationComponent* pRotation, MovementComponent* pMovement, int direction);
-
 		void m_Shoot(Scene* pScene, TransformComponent* pTransform, 
 					 RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer);
 	};

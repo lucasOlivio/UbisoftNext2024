@@ -29,7 +29,7 @@ namespace MyEngine
         {
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
 
-            bool isOutside = TransformUtils::IsOutsideWindow(pTransform->position.x, pTransform->position.y);
+            bool isOutside = TransformUtils::IsOutsideWindow(pTransform->worldPosition.x, pTransform->worldPosition.y);
             if (isOutside)
             {
                 pScene->RemoveEntity(entityId);

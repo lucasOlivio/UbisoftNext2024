@@ -38,7 +38,7 @@ namespace MyEngine
                 RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
 
                 // Check allies against enemies only
-                m_CheckSphereCollision(pScene, entityId, pTransform->position, pRigidBody->radius, i,
+                m_CheckSphereCollision(pScene, entityId, pTransform->worldPosition, pRigidBody->radius, i,
                                       allyGroup,
                                       enemyGroup);
 
@@ -130,7 +130,7 @@ namespace MyEngine
         isCollision = CollisionsUtils::SphereSphere_Overlap(radiusActive,
                                                             positionActive,
                                                             pRigidBodyPassive->radius,
-                                                            pTransformPassive->position);
+                                                            pTransformPassive->worldPosition);
 
         return isCollision;
     }

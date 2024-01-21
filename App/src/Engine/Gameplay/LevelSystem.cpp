@@ -65,7 +65,7 @@ namespace MyEngine
         for (Entity entityId : SceneView<TagComponent>(*pScene))
         {
             TagComponent* pTag = pScene->Get<TagComponent>(entityId);
-            if (pTag->name == "Player")
+            if (pTag->name == "Player" || pTag->name == "Truck")
             {
                 continue;
             }
@@ -75,11 +75,17 @@ namespace MyEngine
 
         // Reset player position and stats
         Entity playerId = GameplayUtils::GetPlayerId(pScene);
-        PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(playerId);
-        TransformComponent* pTransform = pScene->Get<TransformComponent>(playerId);
+        ParentComponent* pParent = pScene->Get<ParentComponent>(playerId);
+        Entity truckId = pParent->parentId;
 
-        pTransform->position = Vec2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 2);
-        pTransform->angle = 0.0f;
+        PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(playerId);
+        TransformComponent* pTransformPlayer = pScene->Get<TransformComponent>(playerId);
+        TransformComponent* pTransformTruck = pScene->Get<TransformComponent>(truckId);
+
+        pTransformPlayer->angle = 0.0f;
+
+        pTransformTruck->position = Vec2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 2);
+        pTransformTruck->angle = 0.0f;
 
         pPlayer->health = pPlayer->maxHealth;
         pPlayer->currentAmmo = pPlayer->maxAmmo;

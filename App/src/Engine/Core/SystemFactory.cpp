@@ -4,6 +4,7 @@
 #include "Engine/Core/FrameSystem.h"
 #include "Engine/Core/StateSystem.h"
 #include "Engine/Core/CoreSystem.h"
+#include "Engine/Core/ParentSystem.h"
 
 #include "Engine/Graphics/RenderSystem.h"
 
@@ -16,6 +17,7 @@
 #include "Engine/Physics/NarrowPhase/CollisionSystem.h"
 
 #include "Engine/Gameplay/PlayerControllerSystem.h"
+#include "Engine/Gameplay/TruckControllerSystem.h"
 #include "Engine/Gameplay/ZombieSpawnSystem.h"
 #include "Engine/Gameplay/FollowTargetSystem.h"
 #include "Engine/Gameplay/DestructionSystem.h"
@@ -38,6 +40,9 @@ namespace MyEngine
         }
         else if (systemName == "CoreSystem") {
             return new CoreSystem();
+        }
+        else if (systemName == "ParentSystem") {
+            return new ParentSystem();
         }
         else if (systemName == "RenderSystem") {
             return new RenderSystem();
@@ -62,6 +67,9 @@ namespace MyEngine
         }
         else if (systemName == "PlayerControllerSystem") {
             return new PlayerControllerSystem();
+        }
+        else if (systemName == "TruckControllerSystem") {
+            return new TruckControllerSystem();
         }
         else if (systemName == "ZombieSpawnSystem") {
             return new ZombieSpawnSystem();

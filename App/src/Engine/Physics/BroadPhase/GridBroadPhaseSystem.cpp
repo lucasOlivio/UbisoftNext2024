@@ -34,10 +34,10 @@ namespace MyEngine
 			TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
 			RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
 
-			uint idxpos = GridUtils::LocatePoint(pTransform->position, pGrid->lengthPerBox);
+			uint idxpos = GridUtils::LocatePoint(pTransform->worldPosition, pGrid->lengthPerBox);
 			m_InsertEntity(entityId, idxpos, pRigidBody->bodyType);
 
-			m_InsertSphere(entityId, idxpos, pTransform->position, 
+			m_InsertSphere(entityId, idxpos, pTransform->worldPosition, 
 						   pRigidBody->radius, pRigidBody->bodyType, pGrid);
 		}
 	}
@@ -67,10 +67,10 @@ namespace MyEngine
 			TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
 			RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
 
-			uint idxpos = GridUtils::LocatePoint(pTransform->position, pGrid->lengthPerBox);
+			uint idxpos = GridUtils::LocatePoint(pTransform->worldPosition, pGrid->lengthPerBox);
 			m_InsertEntity(entityId, idxpos, pRigidBody->bodyType);
 
-			m_InsertSphere(entityId, idxpos, pTransform->position, 
+			m_InsertSphere(entityId, idxpos, pTransform->worldPosition, 
 						   pRigidBody->radius, pRigidBody->bodyType, pGrid);
 		}
 
