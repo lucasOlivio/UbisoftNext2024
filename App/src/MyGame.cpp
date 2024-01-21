@@ -84,7 +84,7 @@ void Init()
 	PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(entityId);
 
 	RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(entityId);
-	pRigidBody->bodyType = eBody::ALLY;
+	pRigidBody->bodyType = eBody::ACTIVE;
 	pRigidBody->radius = 25.0f;
 
 	// Create systems

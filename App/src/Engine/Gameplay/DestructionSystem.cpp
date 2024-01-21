@@ -3,7 +3,6 @@
 #include "DestructionSystem.h"
 
 #include "Engine/ECS/SceneView.hpp"
-#include "Engine/ECS/SingletonComponents/Components.h"
 
 #include "Engine/Events/EventBusLocator.hpp"
 
@@ -52,16 +51,20 @@ namespace MyEngine
 
     void DestructionSystem::OnCollision(const CollisionEnterEvent& event)
     {
-        TagComponent* pTagA = event.collisionData.pScene->Get<TagComponent>(event.collisionData.entityA);
-        if (pTagA && pTagA->name != "Player")
+        Scene* pScene = event.collisionData.pScene;
+        Entity entityActive = event.collisionData.entityActive;
+        Entity entityPassive = event.collisionData.entityPassive;
+
+        TagComponent* pTagActive = pScene->Get<TagComponent>(entityActive);
+        if (pTagActive && pTagActive->name != "Player")
         {
-            event.collisionData.pScene->RemoveEntity(event.collisionData.entityA);
+            pScene->RemoveEntity(entityActive);
         }
 
-        TagComponent* pTagB = event.collisionData.pScene->Get<TagComponent>(event.collisionData.entityB);
-        if (pTagB && pTagB->name != "Player")
+        TagComponent* pTagPassive = pScene->Get<TagComponent>(entityPassive);
+        if (pTagPassive && pTagPassive->name != "Player")
         {
-            event.collisionData.pScene->RemoveEntity(event.collisionData.entityB);
+            pScene->RemoveEntity(entityPassive);
         }
     }
 }

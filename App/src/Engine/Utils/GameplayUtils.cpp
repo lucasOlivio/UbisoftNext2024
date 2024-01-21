@@ -11,6 +11,11 @@
 const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
 
+const float ZOMBIE_RADIUS = 25.0f;
+const float BULLET_RADIUS = 10.0f;
+
+const int ZOMBIE_POINTS = 1;
+
 namespace MyEngine
 {
     Entity GameplayUtils::CreateZombie(Scene* pScene, Vec2 position, float speed)
@@ -33,8 +38,11 @@ namespace MyEngine
 		pFollowTarget->entityToFollow = GetPlayerId(pScene);
 
 		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(zombieId);
-		pRigidBody->bodyType = eBody::ENEMY;
-		pRigidBody->radius = 25.0f;
+		pRigidBody->bodyType = eBody::PASSIVE;
+		pRigidBody->radius = ZOMBIE_RADIUS;
+
+		PointComponent* pPoint = pScene->AddComponent< PointComponent>(zombieId);
+		pPoint->points = ZOMBIE_POINTS;
 
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(zombieId);
 		pSprite->name = DEFAULT_SPRITE_PATH + ZOMBIE_SPRITE;
@@ -67,8 +75,8 @@ namespace MyEngine
 		pProjectile->damage = damage;
 
 		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(projectileId);
-		pRigidBody->bodyType = eBody::ALLY;
-		pRigidBody->radius = 10.0f;
+		pRigidBody->bodyType = eBody::ACTIVE;
+		pRigidBody->radius = BULLET_RADIUS;
 
 		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(projectileId);
 		pSprite->name = DEFAULT_SPRITE_PATH + BULLET_SPRITE;

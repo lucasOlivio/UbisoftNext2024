@@ -26,10 +26,10 @@ namespace MyEngine
         NarrowPhaseTestsComponent* pTests = PhysicsLocator::GetNarrowPhaseTests();
 
         // The first layer is the grouping of objects to test
-        for (int group = 0; group < pTests->allyEntitiesToTest.size(); group++)
+        for (int group = 0; group < pTests->activeEntitiesToTest.size(); group++)
         {
-            std::vector<Entity> allyGroup = pTests->allyEntitiesToTest[group];
-            std::vector<Entity> enemyGroup = pTests->enemyEntitiesToTest[group];
+            std::vector<Entity> allyGroup = pTests->activeEntitiesToTest[group];
+            std::vector<Entity> enemyGroup = pTests->passiveEntitiesToTest[group];
 
             for (int i = 0; i < allyGroup.size(); i++)
             {
@@ -68,42 +68,39 @@ namespace MyEngine
     }
 
     void CollisionSystem::m_CheckSphereOverlaps(Scene* pScene,
-								                Entity entityIdA,
-								                Vec2 positionA,
-                                                float radiusA,
+								                Entity entityIdActive,
+								                Vec2 positionActive,
+                                                float radiusActive,
                                                 const int index,
-                                                const std::vector<Entity>& allyEntities,
-                                                const std::vector<Entity>& enemyEntities)
+                                                const std::vector<Entity>& activeEntities,
+                                                const std::vector<Entity>& passiveEntities)
     {
         // Check entity A against all enemies
-        for (int j = 0; j < enemyEntities.size(); j++)
+        for (int j = 0; j < passiveEntities.size(); j++)
         {
-            Entity entityIdB = enemyEntities[j];
-            bool isCollision = m_CheckSphereEntityOverlap(pScene, entityIdA,
-                                                          positionA,
-                                                          radiusA, 
-                                                          entityIdB);
+            Entity entityIdPassive = passiveEntities[j];
+            bool isCollision = m_CheckSphereEntityOverlap(pScene, entityIdActive,
+                                                          positionActive,
+                                                          radiusActive, 
+                                                          entityIdPassive);
         }
     }
 
     bool CollisionSystem::m_CheckSphereEntityOverlap(Scene* pScene,
-										             Entity entityIdA,
-								                     Vec2 positionA,
-										             float radiusA,
-										             Entity entityIdB)
+										             Entity entityIdActive,
+								                     Vec2 positionActive,
+										             float radiusActive,
+										             Entity entityIdPassive)
     {
-        TransformComponent* pTransformB = pScene->Get<TransformComponent>(entityIdB);
-        RigidBodyComponent* pRigidBodyB = pScene->Get<RigidBodyComponent>(entityIdB);
-
-        MovementComponent* pMovementA = pScene->Get<MovementComponent>(entityIdA);
-        MovementComponent* pMovementB = pScene->Get<MovementComponent>(entityIdB);
+        TransformComponent* pTransformPassive = pScene->Get<TransformComponent>(entityIdPassive);
+        RigidBodyComponent* pRigidBodyPassive = pScene->Get<RigidBodyComponent>(entityIdPassive);
 
         // Get the right collider to test against
         bool isCollision = false;
-        isCollision = CollisionsUtils::SphereSphere_Overlap(radiusA,
-                                                            positionA,
-                                                            pRigidBodyB->radius,
-                                                            pTransformB->position);
+        isCollision = CollisionsUtils::SphereSphere_Overlap(radiusActive,
+                                                            positionActive,
+                                                            pRigidBodyPassive->radius,
+                                                            pTransformPassive->position);
 
         if (!isCollision)
         {
@@ -112,22 +109,8 @@ namespace MyEngine
 
         sCollisionData collData = sCollisionData();
         collData.pScene = pScene;
-        collData.entityA = entityIdA;
-        collData.entityB = entityIdB;
-        collData.collisionNormalA = CollisionsUtils::SphereSphere_Normal(positionA,
-                                                                         pTransformB->position);
-        collData.collisionNormalB = -collData.collisionNormalA;
-        collData.contactPoint = CollisionsUtils::SphereSphere_CollisionPoint(radiusA,
-                                                                             positionA,
-                                                                             collData.collisionNormalA,
-                                                                             pRigidBodyB->radius,
-                                                                             pTransformB->position);
-        collData.velocityAtCollisionA = pMovementA->velocity;
-
-        if (pMovementB)
-        {
-            collData.velocityAtCollisionB = pMovementB->velocity;
-        }
+        collData.entityActive = entityIdActive;
+        collData.entityPassive = entityIdPassive;
 
         m_TriggerCollisionEnter(collData);
 

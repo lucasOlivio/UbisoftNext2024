@@ -74,6 +74,13 @@ namespace MyEngine
 
 		int totalAmmo;
 		int currentAmmo;
+
+		int score;
+	};
+
+	struct PointComponent
+	{
+		int points;
 	};
 
 	struct FollowTargetComponent

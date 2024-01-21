@@ -50,9 +50,9 @@ namespace MyEngine
 	struct NarrowPhaseTestsComponent
 	{
 		// Groups of entities to test,
-		// the enemy entities to be tested against and the ally entities will be in the same index
-		std::vector<std::vector<Entity>> allyEntitiesToTest;
-		std::vector<std::vector<Entity>> enemyEntitiesToTest;
+		// the passive entities to be tested against and the active entities will be in the same index
+		std::vector<std::vector<Entity>> activeEntitiesToTest;
+		std::vector<std::vector<Entity>> passiveEntitiesToTest;
 	};
 
 	// All collisions that happened in the last <FRAME_RATE> frames

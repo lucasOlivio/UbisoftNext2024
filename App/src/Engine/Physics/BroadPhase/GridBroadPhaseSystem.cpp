@@ -53,13 +53,13 @@ namespace MyEngine
 			int key = it->first;
 			GridAABB* pAABB = it->second;
 
-			pAABB->vecEnemyEntities.clear();
-			pAABB->vecAllyEntities.clear();
+			pAABB->vecPassiveEntities.clear();
+			pAABB->vecActiveEntities.clear();
 		}
 
 		// Clear all test groups
-		pNarrowTests->enemyEntitiesToTest.clear();
-		pNarrowTests->allyEntitiesToTest.clear();
+		pNarrowTests->passiveEntitiesToTest.clear();
+		pNarrowTests->activeEntitiesToTest.clear();
 
 		// Update aabbs entities positions
 		for (Entity entityId : SceneView<TransformComponent, RigidBodyComponent>(*pScene))
@@ -81,24 +81,24 @@ namespace MyEngine
 			GridAABB* pAABB = it->second;
 
 			// Only add to narrow phase testing groups if we have ally entity on aabb
-			if (pAABB->vecAllyEntities.size() > 0)
+			if (pAABB->vecActiveEntities.size() > 0)
 			{
 				std::vector<Entity> vecEnemies = {};
-				std::vector<Entity> vecAlly = {};
+				std::vector<Entity> vecActive = {};
 
-				pNarrowTests->enemyEntitiesToTest.push_back(vecEnemies);
-				pNarrowTests->allyEntitiesToTest.push_back(vecAlly);
+				pNarrowTests->passiveEntitiesToTest.push_back(vecEnemies);
+				pNarrowTests->activeEntitiesToTest.push_back(vecActive);
 
 				i++;
 
-				for (Entity entityId : pAABB->vecAllyEntities)
+				for (Entity entityId : pAABB->vecActiveEntities)
 				{
-					pNarrowTests->allyEntitiesToTest[i].push_back(entityId);
+					pNarrowTests->activeEntitiesToTest[i].push_back(entityId);
 				}
 
-				for (Entity entityId : pAABB->vecEnemyEntities)
+				for (Entity entityId : pAABB->vecPassiveEntities)
 				{
-					pNarrowTests->enemyEntitiesToTest[i].push_back(entityId);
+					pNarrowTests->passiveEntitiesToTest[i].push_back(entityId);
 				}
 			}
 
@@ -207,13 +207,13 @@ namespace MyEngine
 	{
 		GridAABB* pAABB = m_GetOrCreateAABB(index);
 
-		if (bodyType == eBody::ENEMY)
+		if (bodyType == eBody::PASSIVE)
 		{
-			pAABB->vecEnemyEntities.insert(entityID);
+			pAABB->vecPassiveEntities.insert(entityID);
 		}
 		else
 		{
-			pAABB->vecAllyEntities.insert(entityID);
+			pAABB->vecActiveEntities.insert(entityID);
 		}
 
 		return;

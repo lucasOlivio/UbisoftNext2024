@@ -29,17 +29,17 @@ namespace MyEngine
 
 		// Sphere checks
 		void m_CheckSphereOverlaps(Scene* pScene,
-								   Entity entityIdA,
-								   Vec2 positionA,
-								   float radiusA,
+								   Entity entityIdActive,
+								   Vec2 positionActive,
+								   float radiusActive,
 								   const int index,
-								   const std::vector<Entity>& nonStaticEntities,
-								   const std::vector<Entity>& staticEntities);
+								   const std::vector<Entity>& activeEntities,
+								   const std::vector<Entity>& PassiveEntities);
 
 		bool m_CheckSphereEntityOverlap(Scene* pScene,
-										Entity entityIdA,
-								        Vec2 positionA,
-										float radiusA,
-										Entity entityIdB);
+										Entity entityIdActive,
+								        Vec2 positionActive,
+										float radiusActive,
+										Entity entityIdPassive);
 	};
 }
