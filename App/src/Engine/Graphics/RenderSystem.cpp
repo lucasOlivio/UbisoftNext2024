@@ -2,11 +2,11 @@
 
 #include "RenderSystem.h"
 
+#include "Engine/Graphics/SpriteManager/SpriteManagerLocator.h"
+
 #include "Engine/ECS/SceneView.hpp"
 
 #include "Engine/Utils/GraphicsUtils.h"
-
-#include <app.h>
 
 namespace MyEngine
 {
@@ -41,23 +41,16 @@ namespace MyEngine
 
     void RenderSystem::Render(Scene* pScene)
     {
-        for (Entity entityId : SceneView<TransformComponent, SpriteComponent>(*pScene))
+        for (Entity entityId : SceneView<SpriteComponent>(*pScene))
         {
             SpriteComponent* pSprite = pScene->Get<SpriteComponent>(entityId);
 
-            pSprite->sprite->Draw();
+            GraphicsUtils::DrawSprite(pSprite);
         }
     }
 
     void RenderSystem::End(Scene* pScene)
     {
-        // Deletes sprite objects
-        for (Entity entityId : SceneView<TransformComponent, SpriteComponent>(*pScene))
-        {
-            SpriteComponent* pSprite = pScene->Get<SpriteComponent>(entityId);
-
-            delete pSprite->sprite;
-        }
     }
 
     void RenderSystem::Shutdown()

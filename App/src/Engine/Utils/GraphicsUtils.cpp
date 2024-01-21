@@ -2,7 +2,7 @@
 
 #include "GraphicsUtils.h"
 
-#include <app.h>
+#include "Engine/Graphics/SpriteManager/SpriteManagerLocator.h"
 
 namespace MyEngine
 {
@@ -32,6 +32,8 @@ namespace MyEngine
 
     void GraphicsUtils::SetupSprite(SpriteComponent* pSprite, TransformComponent* pTransform)
     {
+        /*iSpriteManager* pSpriteManager = SpriteManagerLocator::GetSpriteManager();
+        pSprite->sprite = pSpriteManager->CreateSprite(pSprite->name.c_str(), pSprite->cols, pSprite->rows);*/
         pSprite->sprite = App::CreateSprite(pSprite->name.c_str(), pSprite->cols, pSprite->rows);
         UpdateAnimation(pSprite, pTransform, 0.1f);
 
@@ -40,5 +42,10 @@ namespace MyEngine
         pSprite->sprite->SetAnimation(0);
 
         return;
+    }
+
+    void GraphicsUtils::DrawSprite(SpriteComponent* pSprite)
+    {
+        pSprite->sprite->Draw();
     }
 }

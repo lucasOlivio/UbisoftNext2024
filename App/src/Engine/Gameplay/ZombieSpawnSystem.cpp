@@ -9,8 +9,6 @@
 #include "Engine/Utils/GameplayUtils.h"
 #include "Engine/Utils/Random.h"
 
-#include <app.h>
-
 namespace MyEngine
 {
     void ZombieSpawnSystem::Init()
@@ -20,10 +18,10 @@ namespace MyEngine
     void ZombieSpawnSystem::Start(Scene* pScene)
     {
         ZombieSpawnComponent* pZSpawn = GameplayLocator::GetZombieSpawn();
-        pZSpawn->spawnRate = 0.5f;
+        pZSpawn->spawnRate = 0.01f;
         pZSpawn->lastSpawn = 0.0f;
         pZSpawn->totalZombies = 0;
-        pZSpawn->maxZombies = 200;
+        pZSpawn->maxZombies = 1000;
         pZSpawn->spawnDistance = 650.0f;
         pZSpawn->initialZombieSpeed = 100.0f;
     }

@@ -46,6 +46,7 @@ namespace MyEngine
 		int cols;
 		int rows;
 		float speed;
+		bool isStatic; // Static sprites can share the same CSimpleSprite since they dont need to have different animations
 
 		// Should this be here? Components should be only data, but makes easier for systems.
 		CSimpleSprite* sprite;
@@ -65,6 +66,9 @@ namespace MyEngine
 		
 		float fireRate;
 		float lastFire;
+
+		int totalAmmo;
+		int currentAmmo;
 	};
 
 	struct FollowTargetComponent

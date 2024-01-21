@@ -2,6 +2,9 @@
 
 #include "Engine.h"
 
+#include "Engine/Graphics/SpriteManager/SpriteManager.h"
+#include "Engine/Graphics/SpriteManager/SpriteManagerLocator.h"
+
 #include "Engine/Events/EventBus.hpp"
 #include "Engine/Events/EventBusLocator.hpp"
 
@@ -54,6 +57,10 @@ namespace MyEngine
         // Setting up events
         m_pEventBusCollision = new EventBus<eCollisionEvents, CollisionEnterEvent>();
         EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Set(m_pEventBusCollision);
+
+        // Setting resource managers
+        m_pSpriteManager = new SpriteManager();
+        SpriteManagerLocator::SetSpriteManager(m_pSpriteManager);
     }
 
     void Engine::Update(float deltaTime)
@@ -90,6 +97,9 @@ namespace MyEngine
 
         // Delete event bus
         delete m_pEventBusCollision;
+
+        // Delete resource managers
+        delete m_pSpriteManager;
 
         delete m_pScene;
     }

@@ -33,5 +33,8 @@ namespace MyEngine
 		void m_Rotate(TransformComponent* pTransform, RotationComponent* pRotation, MovementComponent* pMovement, int direction);
 
 		void m_ClipPlayerToWindow(TransformComponent* pTransform, RigidBodyComponent* pRigidBody);
+
+		void m_Shoot(Scene* pScene, TransformComponent* pTransform, 
+					 RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer);
 	};
 }

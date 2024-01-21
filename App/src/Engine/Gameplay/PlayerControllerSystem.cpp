@@ -6,13 +6,14 @@
 
 #include "Engine/ECS/SceneView.hpp"
 
+#include "Engine/Utils/GameplayUtils.h"
 #include "Engine/Utils/TransformUtils.h"
 #include "Engine/Utils/Math.h"
 
 #include <app.h>
 
 const int PLAYER_MAX_HEALTH = 100;
-const float PLAYER_FIRERATE = 1.0f; // Shots per second
+const float PLAYER_FIRERATE = 0.2f; // Shots per second
 
 const float PLAYER_ACCELERATION = 100.0f;
 const float PLAYER_DRAG = 5.0f;
@@ -23,6 +24,8 @@ const float PLAYER_ROTATION_ACCELERATION = 1.0f;
 const float PLAYER_ROTATION_DRAG = 5.0f;
 const float PLAYER_MAX_ROTATION_SPEED = 3.0f;
 const float PLAYER_MAX_ROTATION_ACCELERATION = 15.0f;
+
+const float BULLET_SPEED = 600.0f;
 
 namespace MyEngine
 {
@@ -61,6 +64,7 @@ namespace MyEngine
 
     void PlayerControllerSystem::Update(Scene* pScene, float deltaTime)
     {
+        deltaTime = deltaTime / 1000.0f;
         // Handle inputs for player gameplay
         for (Entity entityId : SceneView<TransformComponent, RotationComponent, 
                                          MovementComponent, PlayerComponent,
@@ -86,7 +90,11 @@ namespace MyEngine
             else
                 pRotation->acceleration = 0.0f;
 
+            if (App::IsKeyPressed(eKeyCodes::SPACE))
+                m_Shoot(pScene, pTransform, pRigidBody, pPlayer);
+
             m_ClipPlayerToWindow(pTransform, pRigidBody);
+            pPlayer->lastFire += deltaTime;
         }
     }
 
@@ -146,5 +154,23 @@ namespace MyEngine
         {
             pTransform->position.y = pRigidBody->radius;
         }
+    }
+
+    void PlayerControllerSystem::m_Shoot(Scene* pScene, TransformComponent* pTransform, 
+                                         RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer)
+    {
+        if (pPlayer->lastFire < pPlayer->fireRate)
+        {
+            return;
+        }
+
+        Vec2 playerDirection = TransformUtils::GetForwardVector(pTransform->angle);
+
+        // Create projectile in front of player
+        GameplayUtils::CreateProjectile(pScene, 
+                                        pTransform->position + (playerDirection * pRigidBody->radius), 
+                                        playerDirection, BULLET_SPEED);
+
+        pPlayer->lastFire = 0.0f;
     }
 }

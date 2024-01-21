@@ -33,43 +33,41 @@ namespace MyEngine
         class Iterator
         {
         public:
-            Iterator(EntityManager* pEntityManager, 
-                     std::vector<Entity>::const_iterator it,
-                     EntityMask mask, bool all)
-                : m_pEntityManager(pEntityManager), m_it(it), m_mask(mask), m_all(all)
+            Iterator(EntityManager* pEntityManager, size_t index, EntityMask mask, bool all)
+                : m_pEntityManager(pEntityManager), m_index(index), m_mask(mask), m_all(all)
             {}
 
             Entity operator*() const
             {
-                // give back the entity we're currently at
-                return *m_it;
+                return m_pEntityManager->GetEntities().at(m_index);
             }
 
             bool operator==(const Iterator& other) const
             {
-                return m_it == other.m_it;
+                return m_index == other.m_index || m_index == m_pEntityManager->GetEntities().size();
             }
 
             bool operator!=(const Iterator& other) const
             {
-                return m_it != other.m_it;
+                return m_index != other.m_index && m_index != m_pEntityManager->GetEntities().size();
             }
 
             Iterator& operator++()
             {
                 const std::vector<Entity>& entities = m_pEntityManager->GetEntities();
+                // Next entity with correct mask
                 do
                 {
-                    m_it++;
-                } while (m_it != entities.end() && 
-                        !(m_all || m_pEntityManager->HasComponents(*m_it, m_mask)));
+                    m_index++;
+                } while (m_index < entities.size() &&
+                        !(m_all || m_pEntityManager->HasComponents(entities[m_index], m_mask)));
 
                 return *this;
             }
 
         private:
-            std::vector<Entity>::const_iterator m_it;
-            EntityManager* m_pEntityManager;
+            size_t m_index;
+            EntityManager* m_pEntityManager{ nullptr };
             EntityMask m_mask;
             bool m_all{ false };
         };
@@ -77,24 +75,25 @@ namespace MyEngine
         const Iterator begin() const
         {
             const std::vector<Entity>& entities = m_pEntityManager->GetEntities();
-            // Give an iterator to the beginning of this components group
-            std::vector<Entity>::const_iterator firstIt = entities.begin();
-            while (firstIt != entities.end() &&
-                    !(m_all || m_pEntityManager->HasComponents(*firstIt, m_mask)))
+
+            // Find first entity with correct mask
+            int firstIndex = 0;
+            while (firstIndex != entities.size() &&
+                   !(m_all || m_pEntityManager->HasComponents(entities[firstIndex], m_mask)))
             {
-                firstIt++;
+                firstIndex++;
             }
-            return Iterator(m_pEntityManager, firstIt, m_mask, m_all);
+
+            return Iterator(m_pEntityManager, firstIndex, m_mask, m_all);
         }
 
         const Iterator end() const
         {
             // Give an iterator to the end of this view 
-            const std::vector<Entity>& entities = m_pEntityManager->GetEntities();
-            return Iterator(m_pEntityManager, entities.end(), m_mask, m_all);
+            return Iterator(m_pEntityManager, m_pEntityManager->GetEntities().size(), m_mask, m_all);
         }
 
-    private:
+    protected:
         EntityManager* m_pEntityManager{ nullptr };
         EntityMask m_mask;
         bool m_all{ false };

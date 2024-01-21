@@ -33,6 +33,9 @@ void Init()
 
 	gEngine = new Engine();
 
+	// Initialize engine
+	gEngine->Init();
+
 	// Setup scene
 	Scene* pScene = gEngine->GetScene();
 
@@ -105,9 +108,6 @@ void Init()
 
 	gEngine->AddSystem(pConsoleSystem, pScene);
 	gEngine->AddSystem(pFrameSystem, pScene);
-
-	// Initialize systems
-	gEngine->Init();
 }
 
 //------------------------------------------------------------------------

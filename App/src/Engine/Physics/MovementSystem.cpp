@@ -4,8 +4,6 @@
 
 #include "Engine/ECS/SceneView.hpp"
 
-#include <app.h>
-
 namespace MyEngine
 {
     void MovementSystem::Init()

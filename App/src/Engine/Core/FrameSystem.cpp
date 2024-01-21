@@ -31,6 +31,8 @@ namespace MyEngine
 
 			pFrame->frameCount = 0;
 			pFrame->fpsTimer = 0.0f;
+
+			LOG_INFO("FPS: " + std::to_string(pFrame->fps));
 		}
 	}
 

@@ -7,8 +7,6 @@
 
 #include "Engine/Utils/TransformUtils.h"
 
-#include <app.h>
-
 namespace MyEngine
 {
     void FollowTargetSystem::Init()

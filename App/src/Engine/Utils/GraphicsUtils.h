@@ -14,5 +14,7 @@ namespace MyEngine
 		static void CreateAnimation(SpriteComponent* pSprite);
 
 		static void SetupSprite(SpriteComponent* pSprite, TransformComponent* pTransform);
+
+		static void DrawSprite(SpriteComponent* pSprite);
 	};
 }
