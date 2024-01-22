@@ -22,10 +22,11 @@ namespace MyEngine
         "TruckControllerSystem",
         "ZombieSpawnSystem",
         "FollowTargetSystem",
-        "DestructionSystem",
         "ScoreSystem",
         "PlayerHealthSystem",
-        "PlayerUISystem"
+        "ItemSystem",
+        "PlayerUISystem",
+        "DestructionSystem"
     };
 
     void CoreSystem::Init()

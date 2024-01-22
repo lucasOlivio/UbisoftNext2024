@@ -87,6 +87,11 @@ namespace MyEngine
         pZSpawn->spawnRate *= (2.0f - diffRate); // Decrease spawn rate by same proportion
         pZSpawn->maxZombies *= diffRate;
         pZSpawn->totalZombies = 0;
+
+        // Health and ammo reffils
+        Vec2 halfpos = Vec2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 2);
+        GameplayUtils::CreateHealthPack(pScene, Vec2(halfpos.x + 50.f, halfpos.y));
+        GameplayUtils::CreateBulletPack(pScene, Vec2(halfpos.x - 50.f, halfpos.y));
     }
 
     void LevelSystem::OnGameOver(const GameOverEvent& event)

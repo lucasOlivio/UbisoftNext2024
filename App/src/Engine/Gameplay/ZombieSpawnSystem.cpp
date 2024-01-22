@@ -14,7 +14,7 @@ namespace MyEngine
     const float ZOMBIE_SPAWN_DISTANCE = 650.0f;
     const float ZOMBIE_SPAWN_RATE = 0.2f;
     const float ZOMBIE_INITIAL_SPEED = 75.0f;
-    const int MAX_ZOMBIES = 200;
+    const int MAX_ZOMBIES = 1;
 
     void ZombieSpawnSystem::Init()
     {

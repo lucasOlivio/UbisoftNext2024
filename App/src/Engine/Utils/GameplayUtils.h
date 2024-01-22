@@ -18,6 +18,10 @@ namespace MyEngine
 
 		static Entity CreateProjectile(Scene* pScene, Vec2 position, Vec2 direction, float speed, int damage);
 
+		static Entity CreateBulletPack(Scene* pScene, Vec2 position);
+
+		static Entity CreateHealthPack(Scene* pScene, Vec2 position);
+
 		static Entity GetPlayerId(Scene* pScene);
 	};
 }

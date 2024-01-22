@@ -25,6 +25,7 @@
 #include "Engine/Gameplay/ScoreSystem.h"
 #include "Engine/Gameplay/PlayerHealthSystem.h"
 #include "Engine/Gameplay/LevelSystem.h"
+#include "Engine/Gameplay/ItemSystem.h"
 
 #include "Engine/Gameplay/UI/PlayerUISystem.h"
 #include "Engine/Gameplay/UI/GameStateUISystem.h"
@@ -92,6 +93,9 @@ namespace MyEngine
         }
         else if (systemName == "LevelSystem") {
             return new LevelSystem();
+        }
+        else if (systemName == "ItemSystem") {
+            return new ItemSystem();
         }
         else if (systemName == "PlayerUISystem") {
             return new PlayerUISystem();

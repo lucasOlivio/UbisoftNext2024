@@ -102,6 +102,12 @@ namespace MyEngine
 		int score;
 	};
 
+	struct ItemComponent
+	{
+		bool refilHealth;
+		bool refilAmmo;
+	};
+
 	struct PointComponent
 	{
 		int points;

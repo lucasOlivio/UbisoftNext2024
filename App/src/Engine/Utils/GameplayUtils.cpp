@@ -15,6 +15,8 @@ const std::string PLAYER_SPRITE = "player_chaingun.png";
 const std::string TRUCK_SPRITE = "Mini_truck.png";
 const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
+const std::string BULLET_PACK_SPRITE = "bullet_pack.png";
+const std::string HEALTH_PACK_SPRITE = "health_pack.png";
 
 const std::string GUNSHOT_SOUND = "gunshot.wav";
 const float GUNSHOT_DURATION = 0.2f;
@@ -22,6 +24,7 @@ const float GUNSHOT_DURATION = 0.2f;
 const float PLAYER_RADIUS = 25.0f;
 const float ZOMBIE_RADIUS = 25.0f;
 const float BULLET_RADIUS = 10.0f;
+const float ITEMS_RADIUS = 15.0f;
 
 const int ZOMBIE_POINTS = 1;
 const int ZOMBIE_DAMAGE = 1;
@@ -186,6 +189,64 @@ namespace MyEngine
 		GraphicsUtils::SetupSprite(pSprite, pTransform);
 
 		return projectileId;
+	}
+
+	Entity GameplayUtils::CreateBulletPack(Scene* pScene, Vec2 position)
+	{
+		Entity bulletpackId = pScene->CreateEntity();
+		TagComponent* pTag = pScene->AddComponent<TagComponent>(bulletpackId);
+		pTag->name = "Item";
+
+		ItemComponent* pItem = pScene->AddComponent<ItemComponent>(bulletpackId);
+		pItem->refilAmmo = true;
+
+		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(bulletpackId);
+		pTransform->position = position;
+		pTransform->angle = 0;
+		pTransform->scale = 1;
+
+		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(bulletpackId);
+		pRigidBody->bodyType = eBody::PASSIVE;
+		pRigidBody->radius = ITEMS_RADIUS;
+
+		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(bulletpackId);
+		pSprite->name = DEFAULT_SPRITE_PATH + BULLET_PACK_SPRITE;
+		pSprite->cols = 1;
+		pSprite->rows = 1;
+		pSprite->speed = 1.0f;
+
+		GraphicsUtils::SetupSprite(pSprite, pTransform);
+
+		return bulletpackId;
+	}
+
+	Entity GameplayUtils::CreateHealthPack(Scene* pScene, Vec2 position)
+	{
+		Entity healthpackId = pScene->CreateEntity();
+		TagComponent* pTag = pScene->AddComponent<TagComponent>(healthpackId);
+		pTag->name = "Item";
+
+		ItemComponent* pItem = pScene->AddComponent<ItemComponent>(healthpackId);
+		pItem->refilHealth = true;
+
+		TransformComponent* pTransform = pScene->AddComponent<TransformComponent>(healthpackId);
+		pTransform->position = position;
+		pTransform->angle = 0;
+		pTransform->scale = 1;
+
+		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(healthpackId);
+		pRigidBody->bodyType = eBody::PASSIVE;
+		pRigidBody->radius = ITEMS_RADIUS;
+
+		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(healthpackId);
+		pSprite->name = DEFAULT_SPRITE_PATH + HEALTH_PACK_SPRITE;
+		pSprite->cols = 1;
+		pSprite->rows = 1;
+		pSprite->speed = 1.0f;
+
+		GraphicsUtils::SetupSprite(pSprite, pTransform);
+
+		return healthpackId;
 	}
 
 	Entity GameplayUtils::GetPlayerId(Scene* pScene)
