@@ -3,6 +3,7 @@
 #include "DestructionSystem.h"
 
 #include "Engine/ECS/SceneView.hpp"
+#include "Engine/ECS/SingletonComponents/GameplayLocator.h"
 
 #include "Engine/Events/EventBusLocator.hpp"
 
@@ -65,10 +66,13 @@ namespace MyEngine
             pScene->RemoveEntity(entityActive);
         }
 
+        pScene->RemoveEntity(entityPassive);
+
         TagComponent* pTagPassive = pScene->Get<TagComponent>(entityPassive);
-        if (pTagPassive && pTagPassive->name != "Player")
+        if (pTagPassive->name == "Zombie")
         {
-            pScene->RemoveEntity(entityPassive);
+            ZombieSpawnComponent* pZSpawn = GameplayLocator::GetZombieSpawn();
+            pZSpawn->aliveZombies--;
         }
     }
 }

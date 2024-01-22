@@ -60,6 +60,7 @@ namespace MyEngine
 
         GameplayUtils::CreateZombie(pScene, Vec2(randomX, randomY), pZSpawn->initialZombieSpeed);
 
+        pZSpawn->aliveZombies++;
         pZSpawn->totalZombies++;
         pZSpawn->lastSpawn = 0.0f;
     }

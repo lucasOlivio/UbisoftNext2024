@@ -40,6 +40,18 @@ namespace MyEngine
         {
             pState->currState = eGameStates::RUNNING;
         }
+
+        if (pState->currState == eGameStates::RUNNING)
+        {
+            ZombieSpawnComponent* pZSpawn = GameplayLocator::GetZombieSpawn();
+
+            if (pZSpawn->aliveZombies == 0 
+                && pZSpawn->totalZombies > 0
+                && pZSpawn->totalZombies == pZSpawn->maxZombies)
+            {
+                pState->currState = eGameStates::LEVELUP;
+            }
+        }
     }
 
     void LevelSystem::Render(Scene* pScene)
@@ -62,6 +74,19 @@ namespace MyEngine
 
     void LevelSystem::OnLevelUp(const GameLevelUpEvent& event)
     {
+        Scene* pScene = event.pScene;
+        float diffRate = 1.1f; // Increase zombies and ammo by 10%
+        Entity playerId = GameplayUtils::GetPlayerId(pScene);
+
+        // Increase player ammo
+        PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(playerId);
+        pPlayer->maxAmmo *= diffRate;
+
+        // Reset zombie count and increase difficulty
+        ZombieSpawnComponent* pZSpawn = GameplayLocator::GetZombieSpawn();
+        pZSpawn->spawnRate *= (2.0f - diffRate); // Decrease spawn rate by same proportion
+        pZSpawn->maxZombies *= diffRate;
+        pZSpawn->totalZombies = 0;
     }
 
     void LevelSystem::OnGameOver(const GameOverEvent& event)

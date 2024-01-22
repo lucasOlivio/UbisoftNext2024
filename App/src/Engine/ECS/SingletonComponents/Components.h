@@ -71,6 +71,7 @@ namespace MyEngine
 		float spawnRate;
 		float lastSpawn;
 		
+		int aliveZombies;
 		int totalZombies;
 		int maxZombies;
 
