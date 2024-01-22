@@ -47,15 +47,21 @@ namespace MyEngine
     {
         deltaTime = deltaTime / 1000.0f;
         // Handle inputs for player gameplay
-        for (Entity entityId : SceneView<TransformComponent, ParentComponent, PlayerComponent, RigidBodyComponent>(*pScene))
+        for (Entity entityId : SceneView<TransformComponent, ParentComponent, 
+                                         PlayerComponent, RigidBodyComponent,
+                                         SoundComponent>(*pScene))
         {
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
             ParentComponent* pParent = pScene->Get<ParentComponent>(entityId);
             RigidBodyComponent* pRigidBody = pScene->Get<RigidBodyComponent>(entityId);
             PlayerComponent* pPlayer = pScene->Get<PlayerComponent>(entityId);
+            SoundComponent* pSound = pScene->Get<SoundComponent>(entityId);
 
             if (App::IsKeyPressed(eKeyCodes::SPACE))
+            {
                 m_Shoot(pScene, pTransform, pRigidBody, pPlayer);
+                pSound->play = true;
+            }
 
             pPlayer->lastFire += deltaTime;
 

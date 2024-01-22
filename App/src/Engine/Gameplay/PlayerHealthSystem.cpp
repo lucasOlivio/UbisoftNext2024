@@ -47,6 +47,10 @@ namespace MyEngine
 
     void PlayerHealthSystem::End(Scene* pScene)
     {
+        // Subscribe to enter collision event
+        iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
+
+        pEventBus->Unsubscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
     }
 
     void PlayerHealthSystem::Shutdown()

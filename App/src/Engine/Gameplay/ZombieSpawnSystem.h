@@ -4,9 +4,11 @@
 
 #include "Engine/ECS/Components.h"
 
+#include "Engine/Events/CollisionEvent.h"
+
 namespace MyEngine
 {
-	// Handles the creation of all zombies
+	// Handles the creation of all zombies and blood spawn on death
 	class ZombieSpawnSystem : public iSystem
 	{
 	public:
@@ -26,5 +28,7 @@ namespace MyEngine
 		virtual void End(Scene* pScene);
 
 		virtual void Shutdown();
+
+		void OnCollision(const CollisionEnterEvent& event);
 	};
 }

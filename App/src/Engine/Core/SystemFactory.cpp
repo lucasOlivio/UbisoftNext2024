@@ -5,6 +5,7 @@
 #include "Engine/Core/StateSystem.h"
 #include "Engine/Core/CoreSystem.h"
 #include "Engine/Core/ParentSystem.h"
+#include "Engine/Core/MediaPlayerSystem.h"
 
 #include "Engine/Graphics/RenderSystem.h"
 
@@ -43,6 +44,9 @@ namespace MyEngine
         }
         else if (systemName == "ParentSystem") {
             return new ParentSystem();
+        }
+        else if (systemName == "MediaPlayerSystem") {
+            return new MediaPlayerSystem();
         }
         else if (systemName == "RenderSystem") {
             return new RenderSystem();

@@ -26,6 +26,16 @@ namespace MyEngine
             m_subscribers[eventType].push_back(handler);
         }
 
+        // Unubscribe from event
+        virtual void Unsubscribe(T eventType, const EventHandler& handler)
+        {
+            for (int i = 0; i < m_subscribers[eventType].size(); i++)
+            {
+                m_subscribers[eventType].erase(m_subscribers[eventType].begin() + index);
+                break;
+            }
+        }
+
         // Publish an event to all the listeners
         virtual void Publish(const F& event)
         {

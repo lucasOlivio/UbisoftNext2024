@@ -18,6 +18,8 @@ namespace MyEngine
 
         // Subscribe to an event
         virtual void Subscribe(T eventType, const iEventBus::EventHandler& handler) = 0;
+        // Unsubscribe from event
+        virtual void Unsubscribe(T eventType, const iEventBus::EventHandler& handler) = 0;
 
         // Publish an event to all the listeners
         virtual void Publish(const F& event) = 0;

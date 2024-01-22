@@ -20,6 +20,11 @@ namespace MyEngine
             TransformComponent* pTransform = pScene->Get<TransformComponent>(entityId);
             SpriteComponent* pSprite = pScene->Get<SpriteComponent>(entityId);
 
+            if (pSprite)
+            {
+                continue;
+            }
+
             GraphicsUtils::SetupSprite(pSprite, pTransform);
         }
         return;

@@ -72,6 +72,12 @@ namespace MyEngine
 	{
 		std::string name;
 
+		float audioDuration;   // In seconds
+		float currentProgress; // In seconds
+		bool isPlaying;
+		bool isLoop;
+
+		bool play; // To play audio just set this to true
 	};
 
 	struct RigidBodyComponent

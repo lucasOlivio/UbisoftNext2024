@@ -56,6 +56,16 @@ namespace MyEngine
 
     void CoreSystem::End(Scene* pScene)
     {
+        // Subscribe to enter collision event
+        iEventBus<eGameStateEvents, GameStartedEvent>* pStartedBus = EventBusLocator<eGameStateEvents, GameStartedEvent>::Get();
+        iEventBus<eGameStateEvents, GameRunningEvent>* pRunningBus = EventBusLocator<eGameStateEvents, GameRunningEvent>::Get();
+        iEventBus<eGameStateEvents, GameLevelUpEvent>* pLevelUpBus = EventBusLocator<eGameStateEvents, GameLevelUpEvent>::Get();
+        iEventBus<eGameStateEvents, GameOverEvent>* pGameOverBus = EventBusLocator<eGameStateEvents, GameOverEvent>::Get();
+
+        pStartedBus->Unsubscribe(eGameStateEvents::GAME_STARTED, OnStart);
+        pRunningBus->Unsubscribe(eGameStateEvents::GAME_RUNNING, OnRunning);
+        pLevelUpBus->Unsubscribe(eGameStateEvents::GAME_LEVELUP, OnLevelUp);
+        pGameOverBus->Unsubscribe(eGameStateEvents::GAME_OVER, OnGameOver);
     }
 
     void CoreSystem::Shutdown()

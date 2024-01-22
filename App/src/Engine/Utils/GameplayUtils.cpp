@@ -14,6 +14,9 @@ const std::string TRUCK_SPRITE = "Mini_truck.png";
 const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
 
+const std::string GUNSHOT_SOUND = "gunshot.wav";
+const float GUNSHOT_DURATION = 0.2f;
+
 const float PLAYER_RADIUS = 25.0f;
 const float ZOMBIE_RADIUS = 25.0f;
 const float BULLET_RADIUS = 10.0f;
@@ -37,6 +40,8 @@ namespace MyEngine
 		pSprite->rows = 1;
 		pSprite->speed = 1.0f;
 
+		GraphicsUtils::SetupSprite(pSprite, pTransform);
+
 		return backgroundId;
 	}
 
@@ -57,6 +62,8 @@ namespace MyEngine
 		pSpriteTruck->cols = 1;
 		pSpriteTruck->rows = 1;
 		pSpriteTruck->speed = 1.0f;
+
+		GraphicsUtils::SetupSprite(pSpriteTruck, pTransformTruck);
 
 		RotationComponent* pRotationTruck = pScene->AddComponent<RotationComponent>(truckId);
 		pRotationTruck->acceleration = 0.0f;
@@ -79,17 +86,25 @@ namespace MyEngine
 		pTransform->angle = 0.0f;
 		pTransform->scale = 1;
 
-		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(playerId);
-		pSprite->name = DEFAULT_SPRITE_PATH + PLAYER_SPRITE;
-		pSprite->cols = 1;
-		pSprite->rows = 1;
-		pSprite->speed = 1.0f;
+		SoundComponent* pSound = pScene->AddComponent<SoundComponent>(playerId);
+		pSound->name = DEFAULT_AUDIO_PATH + GUNSHOT_SOUND;
+		pSound->audioDuration = GUNSHOT_DURATION;
+		pSound->isLoop = false;
+		pSound->play = false;
 
 		PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(playerId);
 
 		RigidBodyComponent* pRigidBody = pScene->AddComponent<RigidBodyComponent>(playerId);
 		pRigidBody->bodyType = eBody::ACTIVE;
 		pRigidBody->radius = PLAYER_RADIUS;
+
+		SpriteComponent* pSprite = pScene->AddComponent<SpriteComponent>(playerId);
+		pSprite->name = DEFAULT_SPRITE_PATH + PLAYER_SPRITE;
+		pSprite->cols = 1;
+		pSprite->rows = 1;
+		pSprite->speed = 1.0f;
+
+		GraphicsUtils::SetupSprite(pSprite, pTransform);
 
 		return playerId;
 	}

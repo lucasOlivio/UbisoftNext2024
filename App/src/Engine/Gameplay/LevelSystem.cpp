@@ -48,6 +48,12 @@ namespace MyEngine
 
     void LevelSystem::End(Scene* pScene)
     {
+        // Subscribe to level up event
+        iEventBus<eGameStateEvents, GameLevelUpEvent>* pLeveUpBus = EventBusLocator<eGameStateEvents, GameLevelUpEvent>::Get();
+        iEventBus<eGameStateEvents, GameOverEvent>* pEventBus = EventBusLocator<eGameStateEvents, GameOverEvent>::Get();
+
+        pLeveUpBus->Unsubscribe(eGameStateEvents::GAME_LEVELUP, OnLevelUp);
+        pEventBus->Unsubscribe(eGameStateEvents::GAME_OVER, OnGameOver);
     }
 
     void LevelSystem::Shutdown()

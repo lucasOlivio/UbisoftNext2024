@@ -43,6 +43,10 @@ namespace MyEngine
 
     void DestructionSystem::End(Scene* pScene)
     {
+        // Subscribe to enter collision event
+        iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
+
+        pEventBus->Unsubscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
     }
 
     void DestructionSystem::Shutdown()
