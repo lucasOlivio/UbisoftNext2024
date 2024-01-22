@@ -20,11 +20,11 @@ namespace MyEngine
         NullEventBus() {}
         virtual ~NullEventBus() {};
 
-        // Subscribe to an event
         virtual void Subscribe(T eventType, const EventHandler& handler) 
         {};
+        virtual void Unsubscribe(T eventType, const EventHandler & handler)
+        {};
 
-        // Publish an event to all the listeners
         virtual void Publish(const F& event)
         {};
     };

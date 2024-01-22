@@ -59,8 +59,7 @@ namespace MyEngine
 
             if (App::IsKeyPressed(eKeyCodes::SPACE))
             {
-                m_Shoot(pScene, pTransform, pRigidBody, pPlayer);
-                pSound->play = true;
+                m_Shoot(pScene, pTransform, pRigidBody, pPlayer, pSound);
             }
 
             pPlayer->lastFire += deltaTime;
@@ -90,7 +89,8 @@ namespace MyEngine
     }
 
     void PlayerControllerSystem::m_Shoot(Scene* pScene, TransformComponent* pTransform, 
-                                         RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer)
+                                         RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer,
+                                         SoundComponent* pSound)
     {
         if (pPlayer->lastFire < pPlayer->fireRate || pPlayer->currentAmmo == 0)
         {
@@ -106,5 +106,6 @@ namespace MyEngine
 
         pPlayer->lastFire = 0.0f;
         pPlayer->currentAmmo--;
+        pSound->play = true;
     }
 }

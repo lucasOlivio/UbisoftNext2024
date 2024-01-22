@@ -29,6 +29,7 @@ namespace MyEngine
 
 	private:
 		void m_Shoot(Scene* pScene, TransformComponent* pTransform, 
-					 RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer);
+					 RigidBodyComponent* pRigidBody, PlayerComponent* pPlayer,
+                     SoundComponent* pSound);
 	};
 }

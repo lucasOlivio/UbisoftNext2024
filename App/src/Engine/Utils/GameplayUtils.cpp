@@ -15,7 +15,7 @@ const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
 
 const std::string GUNSHOT_SOUND = "gunshot.wav";
-const float GUNSHOT_DURATION = 0.2f;
+const float GUNSHOT_DURATION = 0.5f;
 
 const float PLAYER_RADIUS = 25.0f;
 const float ZOMBIE_RADIUS = 25.0f;

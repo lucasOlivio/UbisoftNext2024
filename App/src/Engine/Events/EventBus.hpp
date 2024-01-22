@@ -31,7 +31,7 @@ namespace MyEngine
         {
             for (int i = 0; i < m_subscribers[eventType].size(); i++)
             {
-                m_subscribers[eventType].erase(m_subscribers[eventType].begin() + index);
+                m_subscribers[eventType].erase(m_subscribers[eventType].begin() + i);
                 break;
             }
         }
