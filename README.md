@@ -8,6 +8,8 @@ This is my submission to the Ubisoft Next challenge. We are supposed to do a pro
 2. Run Scripts/Setup-Windows.bat to create visual studio files
 3. Open UbisoftNext.sln and hit F5
 
+WARNING: The path to the folder can't have any space or accents, to allow the assets to be copied over to the build folder.
+
 ## Assets
 
 - Sprites by tokka [https://tokka.itch.io/top-down-basic-set]
