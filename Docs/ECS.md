@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Custom Entity-Component System (ECS) in MyGame provides a dynamic composition and behavior as well as a good performance for a big amount of entities in a scene.
+The Custom Entity-Component System (ECS) in MyEngine provides a dynamic composition and behavior as well as a good performance for a big amount of entities in a scene.
 
 ### Custom types
 

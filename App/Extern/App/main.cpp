@@ -153,7 +153,7 @@ void Idle()
 
 		if (App::IsKeyPressed(APP_QUIT_KEY))
 		{		
-			exit(0);
+			glutLeaveMainLoop();
 		}
 		gUpdateDeltaTime.Start();
 	}

@@ -157,7 +157,8 @@ namespace MyEngine
         return zombieId;
     }
 
-	Entity GameplayUtils::CreateProjectile(Scene* pScene, Vec2 position, Vec2 direction, float speed, int damage)
+	Entity GameplayUtils::CreateProjectile(Scene* pScene, Vec2 position, Vec2 direction, 
+										   float speed, int damage)
 	{
 		Entity projectileId = pScene->CreateEntity();
 		TagComponent* pTag = pScene->AddComponent<TagComponent>(projectileId);

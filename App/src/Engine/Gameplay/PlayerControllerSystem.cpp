@@ -16,7 +16,7 @@ namespace MyEngine
 {
     const int PLAYER_MAX_HEALTH = 100;
     const float PLAYER_FIRERATE = 0.1f;
-    const int PLAYER_TOTAL_BULLETS = 200;
+    const int PLAYER_TOTAL_BULLETS = 100;
 
     const float BULLET_SPEED = 600.0f;
     const int BULLET_DAMAGE = 10;
