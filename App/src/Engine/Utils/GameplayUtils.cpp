@@ -8,6 +8,8 @@
 #include "Engine/Utils/GraphicsUtils.h"
 #include "Engine/Utils/TransformUtils.h"
 
+#include <app.h>
+
 const std::string BACKGROUND_SPRITE = "background.jpg";
 const std::string PLAYER_SPRITE = "player_chaingun.png";
 const std::string TRUCK_SPRITE = "Mini_truck.png";
@@ -15,7 +17,7 @@ const std::string ZOMBIE_SPRITE = "zombie.png";
 const std::string BULLET_SPRITE = "bullet.png";
 
 const std::string GUNSHOT_SOUND = "gunshot.wav";
-const float GUNSHOT_DURATION = 0.5f;
+const float GUNSHOT_DURATION = 0.2f;
 
 const float PLAYER_RADIUS = 25.0f;
 const float ZOMBIE_RADIUS = 25.0f;
@@ -91,6 +93,9 @@ namespace MyEngine
 		pSound->audioDuration = GUNSHOT_DURATION;
 		pSound->isLoop = false;
 		pSound->play = false;
+
+		// Play once to load first time and avoid freeze on game
+		App::PlaySoundW(pSound->name.c_str(), pSound->isLoop);
 
 		PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(playerId);
 

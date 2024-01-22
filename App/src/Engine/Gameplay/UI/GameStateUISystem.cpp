@@ -52,7 +52,7 @@ namespace MyEngine
         {
             App::Print(GAMEOVER_X, GAMEOVER_Y, GAMEOVER_TXT,
                        RED[0], RED[1], RED[2]);
-            App::Print(STARTGAME_X, STARTGAME_Y, STARTGAME_TXT,
+            App::Print(STARTGAME_X, GAMEOVER_Y - 25.0f, STARTGAME_TXT,
                        RED[0], RED[1], RED[2]);
         }
     }
