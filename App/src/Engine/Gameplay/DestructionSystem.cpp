@@ -13,14 +13,14 @@ namespace MyEngine
 {
     void DestructionSystem::Init()
     {
-    }
-
-    void DestructionSystem::Start(Scene* pScene)
-    {
         // Subscribe to enter collision event
         iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
 
         pEventBus->Subscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
+    }
+
+    void DestructionSystem::Start(Scene* pScene)
+    {
     }
 
     void DestructionSystem::Update(Scene* pScene, float deltaTime)
@@ -44,14 +44,14 @@ namespace MyEngine
 
     void DestructionSystem::End(Scene* pScene)
     {
-        // Subscribe to enter collision event
-        iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
-
-        pEventBus->Unsubscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
     }
 
     void DestructionSystem::Shutdown()
     {
+        // Subscribe to enter collision event
+        iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
+
+        pEventBus->Unsubscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
     }
 
     void DestructionSystem::OnCollision(const CollisionEnterEvent& event)

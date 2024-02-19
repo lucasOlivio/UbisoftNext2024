@@ -98,7 +98,7 @@ namespace MyEngine
 		pSound->play = false;
 
 		// Play once to load first time and avoid freeze on game
-		App::PlaySoundW(pSound->name.c_str(), pSound->isLoop);
+		//App::PlaySoundW(pSound->name.c_str(), pSound->isLoop);
 
 		PlayerComponent* pPlayer = pScene->AddComponent<PlayerComponent>(playerId);
 

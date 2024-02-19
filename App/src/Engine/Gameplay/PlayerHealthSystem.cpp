@@ -13,14 +13,14 @@ namespace MyEngine
 {
     void PlayerHealthSystem::Init()
     {
-    }
-
-    void PlayerHealthSystem::Start(Scene* pScene)
-    {
         // Subscribe to enter collision event
         iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
 
         pEventBus->Subscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
+    }
+
+    void PlayerHealthSystem::Start(Scene* pScene)
+    {
     }
 
     void PlayerHealthSystem::Update(Scene* pScene, float deltaTime)
@@ -47,14 +47,14 @@ namespace MyEngine
 
     void PlayerHealthSystem::End(Scene* pScene)
     {
-        // Subscribe to enter collision event
-        iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
-
-        pEventBus->Unsubscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
     }
 
     void PlayerHealthSystem::Shutdown()
     {
+        // Subscribe to enter collision event
+        iEventBus<eCollisionEvents, CollisionEnterEvent>* pEventBus = EventBusLocator<eCollisionEvents, CollisionEnterEvent>::Get();
+
+        pEventBus->Unsubscribe(eCollisionEvents::COLLISION_ENTER, OnCollision);
     }
 
     void PlayerHealthSystem::OnCollision(const CollisionEnterEvent& event)

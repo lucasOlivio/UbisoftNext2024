@@ -18,16 +18,16 @@ namespace MyEngine
 {
     void LevelSystem::Init()
     {
-    }
-
-    void LevelSystem::Start(Scene* pScene)
-    {
         // Subscribe to level up event
         iEventBus<eGameStateEvents, GameLevelUpEvent>* pLeveUpBus = EventBusLocator<eGameStateEvents, GameLevelUpEvent>::Get();
         iEventBus<eGameStateEvents, GameOverEvent>* pEventBus = EventBusLocator<eGameStateEvents, GameOverEvent>::Get();
 
         pLeveUpBus->Subscribe(eGameStateEvents::GAME_LEVELUP, OnLevelUp);
         pEventBus->Subscribe(eGameStateEvents::GAME_OVER, OnGameOver);
+    }
+
+    void LevelSystem::Start(Scene* pScene)
+    {
     }
 
     void LevelSystem::Update(Scene* pScene, float deltaTime)
@@ -60,16 +60,16 @@ namespace MyEngine
 
     void LevelSystem::End(Scene* pScene)
     {
+    }
+
+    void LevelSystem::Shutdown()
+    {
         // Subscribe to level up event
         iEventBus<eGameStateEvents, GameLevelUpEvent>* pLeveUpBus = EventBusLocator<eGameStateEvents, GameLevelUpEvent>::Get();
         iEventBus<eGameStateEvents, GameOverEvent>* pEventBus = EventBusLocator<eGameStateEvents, GameOverEvent>::Get();
 
         pLeveUpBus->Unsubscribe(eGameStateEvents::GAME_LEVELUP, OnLevelUp);
         pEventBus->Unsubscribe(eGameStateEvents::GAME_OVER, OnGameOver);
-    }
-
-    void LevelSystem::Shutdown()
-    {
     }
 
     void LevelSystem::OnLevelUp(const GameLevelUpEvent& event)
