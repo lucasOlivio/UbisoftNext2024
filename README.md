@@ -1,4 +1,4 @@
-# Ubisoft Next 2024 submission
+# Ubisoft Next 2024 - Top 5 submission
 
 This is my submission to the Ubisoft Next challenge. We are supposed to do a projectile based game using only C++ and the Next API provided.
 
