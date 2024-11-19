@@ -10,6 +10,10 @@ This is my submission to the Ubisoft Next challenge. We are supposed to do a pro
 
 WARNING: The path to the folder can't have any space or accents, to allow the assets to be copied over to the build folder.
 
+![menu](https://github.com/lucasOlivio/UbisoftNext2024/blob/main/Docs/Screenshot1.png?raw=true)
+![zombies](https://github.com/lucasOlivio/UbisoftNext2024/blob/main/Docs/Screenshot2.png?raw=true)
+![items](https://github.com/lucasOlivio/UbisoftNext2024/blob/main/Docs/Screenshot3.png?raw=true)
+
 ## Assets
 
 - Sprites by tokka [https://tokka.itch.io/top-down-basic-set]
